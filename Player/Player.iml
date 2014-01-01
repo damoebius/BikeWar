@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="HAXE_MODULE" version="4">
+  <component name="HaxeModuleSettingsStorage">
+    <option name="arguments" value="-lib mconsole -lib msignal -lib createjs  -debug" />
+    <option name="haxeTarget" value="JavaScript" />
+    <option name="mainClass" value="com.tamina.bikewar.Player" />
+    <option name="outputFileName" value="Player.js" />
+  </component>
   <component name="NewModuleRootManager" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/../out/production/Player" />
     <exclude-output />
@@ -8,6 +14,9 @@
     </content>
     <orderEntry type="jdk" jdkName="haXe NA" jdkType="haXe SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="createjs" level="project" />
+    <orderEntry type="library" name="mconsole" level="project" />
+    <orderEntry type="library" name="msignal" level="project" />
   </component>
 </module>
 

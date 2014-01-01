@@ -1,0 +1,5 @@
+-cp src
+-main com.tamina.bikewar.Player
+-lib mconsole
+-lib msignal
+-lib createjs
