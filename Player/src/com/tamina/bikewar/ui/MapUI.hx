@@ -5,7 +5,7 @@ import createjs.easeljs.Bitmap;
 import createjs.easeljs.Stage;
 import js.HTMLCanvasElement;
 
-class MapStage extends Stage {
+class MapUI extends Stage {
 
     private var _width:Int;
     private var _height:Int;
