@@ -33,7 +33,7 @@ class Player {
 	{
 		this.name = name;
 		this.script = script;
-		this.id = Std.string( UID.get() );
+		this.id = Std.string( UID.getUID() );
 	}
 	
 	/**

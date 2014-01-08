@@ -12,11 +12,11 @@ class BattleRenderer {
     private var _width:Int;
     private var _height:Int;
 
-    public function new(canvas:HTMLCanvasElement, width:Int, height:Int) {
+    public function new(canvas:HTMLCanvasElement, width:Int, height:Int, data:MapData) {
+        _data = data;
         _width = width;
         _height = height;
         _display = new MapUI(canvas, _width, _height);
         _engine = new LiveGameEngine();
-        _data = new MapData();
     }
 }

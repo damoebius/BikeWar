@@ -14,10 +14,10 @@
     </content>
     <orderEntry type="jdk" jdkName="haXe NA" jdkType="haXe SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="createjs" level="project" />
-    <orderEntry type="library" name="mconsole" level="project" />
     <orderEntry type="library" name="msignal" level="project" />
     <orderEntry type="library" name="taminahx" level="project" />
+    <orderEntry type="library" name="mconsole" level="project" />
+    <orderEntry type="library" name="createjs" level="project" />
   </component>
 </module>
 
