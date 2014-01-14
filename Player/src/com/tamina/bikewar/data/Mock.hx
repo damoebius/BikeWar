@@ -4,6 +4,7 @@ class Mock {
 
     public static function getMap(width:Int, height:Int):MapData {
         var result:MapData = new MapData();
+        result.currentTime = Date.now();
 // Players
         result.players.push(new Player('IA 1', 'js/ia1.js'));
         result.players.push(new Player('IA 2', 'js/ia2.js'));
