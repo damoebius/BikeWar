@@ -1,10 +1,11 @@
 package com.tamina.bikewar.data;
+import com.tamina.bikewar.game.GameUtils;
 import createjs.easeljs.Point;
 class Mock {
 
     public static function getMap(width:Int, height:Int):MapData {
         var result:MapData = new MapData();
-        result.currentTime = Date.now();
+        result.currentTime = GameUtils.getCurrentRoundedDate();
 // Players
         result.players.push(new Player('IA 1', 'js/ia1.js'));
         result.players.push(new Player('IA 2', 'js/ia2.js'));

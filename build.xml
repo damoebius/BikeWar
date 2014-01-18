@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="bikewar" default="build">
+
+	<property environment="env"/>
+	<property file="build.properties"/>
+
+	<target name="clean">
+		<delete dir="${output}"/>
+	</target>
+
+	<target name="copy-debug-sources">
+		<mkdir dir="${output.haxe}"/>
+
+		<copy todir="${output.haxe}">
+			<fileset dir="${env.HAXEPATH}">
+				<include name="std/**"/>
+				<include name="lib/**"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="compile-player">
+		<mkdir dir="${output.js}"/>
+
+		<exec executable="haxe" dir="Player" failonerror="true">
+			<arg line="Player.hxml"/>
+			<arg line="-js '${output.js}/Player.js'"/>
+		</exec>
+	</target>
+
+	<!--<target name="compile-editor-debug" depends="copy-debug-sources">-->
+	<target name="compile-player-debug">
+		<mkdir dir="${output.js}"/>
+
+		<mkdir dir="${output.src}/Player"/>
+
+		<copy todir="${output.src}/Player">
+			<fileset dir="Player/src">
+				<include name="**"/>
+			</fileset>
+		</copy>
+
+		<exec executable="haxe" dir="Player" failonerror="true">
+            <arg line="-cp src -js ${output.js}/Player.js -main com.tamina.bikewar.Player -debug"/>
+            <arg line="-lib mconsole"/>
+            <arg line="-lib msignal"/>
+            <arg line="-lib createjs"/>
+            <arg line="-lib taminahx"/>
+		</exec>
+
+		<replace file="${output.js}/Player.js.map" token="${sourceRootLine.token}"
+				 value="${sourceRootLine.value}"/>
+
+		<replace file="${output.js}/Player.js.map" token="/" value="\"/>
+		<replace file="${output.js}/Player.js.map" token="${env.HAXEPATH}" value="/haxe/"/>
+		<replace file="${output.js}/Player.js.map" token="${basedir}\sakuraEditor\src" value="/src/sakuraEditor" />
+		<replace file="${output.js}/Player.js.map" token="\" value="/"/>
+	</target>
+
+
+	<target name="compile-all" depends="compile-player"/>
+
+	<target name="compile-all-debug" depends="compile-player-debug"/>
+
+	<target name="copy-static-resources">
+		<copy todir="${output}">
+			<fileset dir="TestPlayer/src">
+				<include name="**/*"/>
+			</fileset>
+            <fileset dir="Player/assets">
+                <include name="**/*"/>
+            </fileset>
+		</copy>
+	</target>
+
+    <target name="deploy">
+        <copy todir="${deployDir}">
+            <fileset dir="TestPlayer/build">
+                <include name="**/*"/>
+            </fileset>
+        </copy>
+    </target>
+
+	<target name="build" depends="clean, copy-static-resources, compile-all"/>
+
+	<target name="build-debug" depends="clean, copy-static-resources, compile-all-debug"/>
+
+
+</project>

@@ -1,4 +1,5 @@
 package com.tamina.bikewar.core;
+import com.tamina.bikewar.game.Game;
 import com.tamina.bikewar.data.MapData;
 import com.tamina.bikewar.ui.MapUI;
 import js.HTMLCanvasElement;
@@ -17,6 +18,16 @@ class BattleRenderer {
         _width = width;
         _height = height;
         _display = new MapUI(canvas, _width, _height);
+        _display.init(_data);
         _engine = new LiveGameEngine();
+        start();
+    }
+
+    public function start():Void {
+        if(!_engine.isComputing){
+            _engine.getBattleResult( _data, Game.GAME_SPEED);
+        } else {
+            trace("battle already started");
+        }
     }
 }

@@ -1,4 +1,5 @@
 package com.tamina.bikewar.ui;
+import createjs.easeljs.Shape;
 import createjs.easeljs.Text;
 import com.tamina.bikewar.data.MapData;
 import org.tamina.view.Group;
@@ -26,9 +27,14 @@ class MapUI extends Stage {
         this.addChild(_backgroundBitmap);
         _stationsContainer = new Group<BikeStationSprite>();
         this.addChild(_stationsContainer);
+        var textBackgroundShape:Shape = new Shape();
+        textBackgroundShape.graphics.beginFill('#FFFF00');
+        textBackgroundShape.graphics.drawRect(0,0,285,35);
+        textBackgroundShape.graphics.endFill();
+        this.addChild(textBackgroundShape);
         _dateText = new Text();
         _dateText.color = '#000000';
-        _dateText.font = "40px 04b";
+        _dateText.font = "30px Arial";
         _dateText.textAlign = 'left';
         this.addChild(_dateText);
         Ticker.addEventListener(CreateJSEvent.TICKER_TICK, tickerHandler);
@@ -37,6 +43,7 @@ class MapUI extends Stage {
     public function init(data:MapData):Void {
         _data = data;
         _dateText.text = _data.currentTime.toString();
+        trace(_data.stations.length);
         for (i in 0..._data.stations.length) {
             var stationSprite = new BikeStationSprite( _data.stations[i], _data.currentTime );
             stationSprite.x =  _data.stations[i].position.x;
