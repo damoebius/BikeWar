@@ -1,5 +1,6 @@
 package com.tamina.bikewar.data;
 
+import com.tamina.bikewar.game.Game;
 import msignal.Signal;
 import haxe.Log;
 import haxe.Timer;
@@ -48,7 +49,7 @@ class IA implements IIA
 
     public function send(data:MapData):Void {
 		_startTime = Date.now().getTime();
-		//_worker.postMessage( new TurnMessage(playerId, data) );
+		_worker.postMessage( new TurnMessage(playerId, data) );
 	}
 	
 	public function isRunning():Bool {
@@ -58,13 +59,13 @@ class IA implements IIA
 	private function maxDuration_reachHandler():Void {
 		if (_startTime > 0) {
 			
-			/*var t0:Float = Date.now().getTime();
+			var t0:Float = Date.now().getTime();
 			if (t0 - _startTime > Game.MAX_TURN_DURATION) {
 				Log.trace("maxDuration_reachHandler");
 				_turnTimer.stop();
 				_turnTimer = null;
                 turnMaxDuration_reachSignal.dispatch(playerId);
-			}   */
+			}
 		}
 	}
 	

@@ -9,7 +9,7 @@ import js.HTMLCanvasElement;
 import org.tamina.log.QuickLogger;
 import com.tamina.bikewar.core.BattleRenderer;
 
-@:expose class Player {
+@:expose class PlayerUI {
 
     public static var DEFAULT_WIDTH:Int=1353;
     public static var DEFAULT_HEIGHT:Int=549;

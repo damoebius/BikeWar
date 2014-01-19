@@ -102,7 +102,12 @@ class BaseGameEngine {
     }
 
     private function retrieveIAOrders():Void {
-
+        if (!_IAList[0].isRunning() && !_IAList[1].isRunning()) {
+            _IAList[0].init();
+            _IAList[1].init();
+            _IAList[0].send(_data);
+            _IAList[1].send(_data);
+        }
     }
 
     private function updateBikeStations():Void{
