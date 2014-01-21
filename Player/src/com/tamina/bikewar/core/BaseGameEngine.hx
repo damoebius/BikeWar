@@ -1,4 +1,5 @@
 package com.tamina.bikewar.core;
+import com.tamina.bikewar.data.Trend;
 import com.tamina.bikewar.game.GameUtils;
 import com.tamina.bikewar.data.PlayerResult;
 import com.tamina.bikewar.data.BattleResult;
@@ -11,6 +12,7 @@ import msignal.Signal;
 class BaseGameEngine {
 
     public var battle_completeSignal:Signal1<BattleResult>;
+    public var turn_completeSignal:Signal0;
 
     private var _currentTurn:Int;
     private var _endBattleDate:Date;
@@ -29,13 +31,13 @@ class BaseGameEngine {
 
     public var isComputing(get_isComputing, null):Bool;
 
-    public function getBattleResult( data:MapData, turnSpeed:Int = 1):Void {
+    public function getBattleResult(data:MapData, turnSpeed:Int = 1):Void {
         _currentTurn = 0;
         _isComputing = false;
         _data = data;
         _playerList = new Array<PlayerResult>();
-        _playerList.push( new PlayerResult( _data.players[0]));
-        _playerList.push( new PlayerResult( _data.players[1]));
+        _playerList.push(new PlayerResult( _data.players[0]));
+        _playerList.push(new PlayerResult( _data.players[1]));
 
 
         _IAList[0].turnResult_completeSignal.add(IA_ordersResultHandler);
@@ -55,6 +57,8 @@ class BaseGameEngine {
 
 
     public function new() {
+        turn_completeSignal = new Signal0();
+        battle_completeSignal = new Signal1<BattleResult>();
     }
 
     private function maxDuration_reachHandler(playerId:String):Void {
@@ -84,11 +88,13 @@ class BaseGameEngine {
     }
 
     private function computeCurrentTurn():Void {
-        /*parseOrder();
+/*parseOrder();
         moveShips();
         increasePlanetGrowth();
         updatePlayerScore();*/
         updateBikeStations();
+        _data.currentTime = Date.fromTime(_data.currentTime.getTime() + Game.TURN_TIME);
+        turn_completeSignal.dispatch();
         _currentTurn++;
         if (_isComputing && _currentTurn >= _maxNumTurn) {
             if (_playerList[0].score > _playerList[1].score) {
@@ -110,19 +116,30 @@ class BaseGameEngine {
         }
     }
 
-    private function updateBikeStations():Void{
-        for(i in 0..._data.stations.length){
-            var station =  _data.stations[i];
-            var trend = GameUtils.getBikeStationTrend(station,_data.currentTime);
-            _data.stations[i].bikeNum++;
+    private function updateBikeStations():Void {
+        for (i in 0..._data.stations.length) {
+            var station = _data.stations[i];
+            var trend = GameUtils.getBikeStationTrend(station, _data.currentTime);
+            var trendNum:Int=0;
+            switch(trend){
+                case Trend.INCREASE : Math.round( Math.random()*3 );
+                case Trend.DECREASE : -Math.round( Math.random()*3 );
+                case Trend.STABLE : trendNum = Math.round( Math.random()*2 ) -1;
+            }
+            station.bikeNum += trendNum;
+            if(station.bikeNum < 0){
+                station.bikeNum = 0;
+            }
+            if(station.bikeNum > station.slotNum){
+                station.bikeNum = station.slotNum;
+            }
         }
     }
 
-    private function endBattle(result:BattleResult):Player
-    {
+    private function endBattle(result:BattleResult):Player {
         _isComputing = false;
         _endBattleDate = Date.now();
-        trace("fin du match : "+_playerList[0].player.name+" = " + _playerList[0].score + "// "+_playerList[1].player.name+" = " + _playerList[1].score + " // WINNER " + result.winner.name);
+        trace("fin du match : " + _playerList[0].player.name + " = " + _playerList[0].score + "// " + _playerList[1].player.name + " = " + _playerList[1].score + " // WINNER " + result.winner.name);
         trace("battle duration " + ( _endBattleDate.getTime() - _startBattleDate.getTime() ) / 1000 + " sec");
         battle_completeSignal.dispatch(result);
         return result.winner;

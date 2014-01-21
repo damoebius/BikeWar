@@ -20,6 +20,7 @@ class BattleRenderer {
         _display = new MapUI(canvas, _width, _height);
         _display.init(_data);
         _engine = new LiveGameEngine();
+        _engine.turn_completeSignal.add(turnCompleteHandler);
         start();
     }
 
@@ -29,5 +30,9 @@ class BattleRenderer {
         } else {
             trace("battle already started");
         }
+    }
+
+    private function turnCompleteHandler():Void{
+        _display.updateData();
     }
 }

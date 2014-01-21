@@ -11,9 +11,8 @@ class BikeStationSprite extends Container {
     private var _data:BikeStation;
     private var _currentTime:Date;
 
-    private var _upBackgroundBitmap:Bitmap;
-    private var _downBackgroundBitmap:Bitmap;
-    private var _normalBackgroundBitmap:Bitmap;
+    private var _defaultBackgroundBitmap:Bitmap;
+    private var _outBackgroundBitmap:Bitmap;
     private var _label:Text;
     private var _backgroundContainer:Container;
 
@@ -21,9 +20,8 @@ class BikeStationSprite extends Container {
         super();
         _data = data;
         _currentTime = currentTime;
-        _upBackgroundBitmap = new Bitmap('images/stationBackground_up.png');
-        _downBackgroundBitmap = new Bitmap('images/stationBackground_down.png');
-        _normalBackgroundBitmap = new Bitmap('images/stationBackground_normal.png');
+        _defaultBackgroundBitmap = new Bitmap('images/stationBackground_defaut.png');
+        _outBackgroundBitmap = new Bitmap('images/stationBackground_out.png');
 
         _backgroundContainer = new Container();
         this.addChild(_backgroundContainer);
@@ -42,14 +40,17 @@ class BikeStationSprite extends Container {
         updateBackground();
     }
 
+    public function updateData(currentTime:Date):Void{
+        _label.text = Std.string(_data.bikeNum);
+        _currentTime = currentTime;
+        updateBackground();
+    }
+
     private function updateBackground():Void{
         _backgroundContainer.removeAllChildren();
-        var targetBackground:Bitmap = _downBackgroundBitmap;
-        var trend = GameUtils.getBikeStationTrend(_data,_currentTime);
-        switch(trend){
-            case Trend.INCREASE : targetBackground = _upBackgroundBitmap;
-            case Trend.DECREASE : targetBackground = _downBackgroundBitmap;
-            case Trend.STABLE : targetBackground = _normalBackgroundBitmap;
+        var targetBackground:Bitmap = _defaultBackgroundBitmap;
+        if(_data.bikeNum < _data.slotNum/4 || _data.bikeNum > _data.slotNum/4*3){
+            targetBackground = _outBackgroundBitmap;
         }
         _backgroundContainer.addChild(targetBackground);
     }

@@ -15,6 +15,7 @@ class MapUI extends Stage {
     private var _height:Int;
     private var _backgroundBitmap:Bitmap;
     private var _stationsContainer:Group<BikeStationSprite>;
+    private var _trucksContainer:Group<TruckSprite>;
     private var _data:MapData;
     private var _dateText:Text;
 
@@ -26,7 +27,9 @@ class MapUI extends Stage {
         _backgroundBitmap = new Bitmap("images/map.png");
         this.addChild(_backgroundBitmap);
         _stationsContainer = new Group<BikeStationSprite>();
+        _trucksContainer = new Group<TruckSprite>();
         this.addChild(_stationsContainer);
+        this.addChild(_trucksContainer);
         var textBackgroundShape:Shape = new Shape();
         textBackgroundShape.graphics.beginFill('#FFFF00');
         textBackgroundShape.graphics.drawRect(0,0,285,35);
@@ -49,6 +52,19 @@ class MapUI extends Stage {
             stationSprite.x =  _data.stations[i].position.x;
             stationSprite.y =  _data.stations[i].position.y;
             _stationsContainer.addElement(stationSprite);
+        }
+        for (i in 0..._data.trucks.length) {
+            var truckSprite = new TruckSprite( _data.trucks[i] );
+            truckSprite.x =  _data.trucks[i].position.x;
+            truckSprite.y =  _data.trucks[i].position.y;
+            _trucksContainer.addElement(truckSprite);
+        }
+    }
+
+    public function updateData():Void{
+        _dateText.text = _data.currentTime.toString();
+        for (i in 0..._stationsContainer.getNumChildren()) {
+            _stationsContainer.getElementAt(i).updateData(_data.currentTime);
         }
     }
 

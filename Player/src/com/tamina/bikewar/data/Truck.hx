@@ -1,6 +1,6 @@
 package com.tamina.bikewar.data;
+import org.tamina.geom.Point;
 import org.tamina.utils.UID;
-import createjs.easeljs.Point;
 class Truck {
 
     public var id:Float;
@@ -8,7 +8,10 @@ class Truck {
     public var bikeNum:Int;
     public var position:Point;
 
-    public function new() {
+    public function new(owner:Player,position:Point) {
         this.id = UID.getUID();
+        this.owner = owner;
+        this.position = position;
+        this.bikeNum = 0;
     }
 }

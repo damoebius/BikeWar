@@ -28,6 +28,15 @@
 		</exec>
 	</target>
 
+    <target name="compile-ia">
+        <mkdir dir="${output.js}"/>
+
+        <exec executable="haxe" dir="Player" failonerror="true">
+            <arg line="-cp src -js ${output.js}/MyIA.js -main MyIA -debug"/>
+            <arg line="-lib taminahx"/>
+        </exec>
+    </target>
+
 	<!--<target name="compile-editor-debug" depends="copy-debug-sources">-->
 	<target name="compile-player-debug">
 		<mkdir dir="${output.js}"/>
@@ -58,7 +67,7 @@
 	</target>
 
 
-	<target name="compile-all" depends="compile-player"/>
+	<target name="compile-all" depends="compile-player, compile-ia"/>
 
 	<target name="compile-all-debug" depends="compile-player-debug"/>
 

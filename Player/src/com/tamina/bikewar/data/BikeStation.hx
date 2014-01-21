@@ -1,6 +1,6 @@
 package com.tamina.bikewar.data;
+import org.tamina.geom.Point;
 import org.tamina.utils.UID;
-import createjs.easeljs.Point;
 class BikeStation {
 
     public var id:Float;
@@ -14,4 +14,5 @@ class BikeStation {
         profile = new Array<Int>();
         this.id = UID.getUID();
     }
+
 }
