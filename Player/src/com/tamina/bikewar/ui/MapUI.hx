@@ -32,7 +32,7 @@ class MapUI extends Stage {
         this.addChild(_trucksContainer);
         var textBackgroundShape:Shape = new Shape();
         textBackgroundShape.graphics.beginFill('#FFFF00');
-        textBackgroundShape.graphics.drawRect(0,0,285,35);
+        textBackgroundShape.graphics.drawRect(0, 0, 285, 35);
         textBackgroundShape.graphics.endFill();
         this.addChild(textBackgroundShape);
         _dateText = new Text();
@@ -49,19 +49,19 @@ class MapUI extends Stage {
         trace(_data.stations.length);
         for (i in 0..._data.stations.length) {
             var stationSprite = new BikeStationSprite( _data.stations[i], _data.currentTime );
-            stationSprite.x =  _data.stations[i].position.x;
-            stationSprite.y =  _data.stations[i].position.y;
+            stationSprite.x = _data.stations[i].position.x;
+            stationSprite.y = _data.stations[i].position.y;
             _stationsContainer.addElement(stationSprite);
         }
         for (i in 0..._data.trucks.length) {
             var truckSprite = new TruckSprite( _data.trucks[i] );
-            truckSprite.x =  _data.trucks[i].position.x;
-            truckSprite.y =  _data.trucks[i].position.y;
+            truckSprite.x = _data.trucks[i].position.x;
+            truckSprite.y = _data.trucks[i].position.y;
             _trucksContainer.addElement(truckSprite);
         }
     }
 
-    public function updateData():Void{
+    public function updateData():Void {
         _dateText.text = _data.currentTime.toString();
         for (i in 0..._stationsContainer.getNumChildren()) {
             _stationsContainer.getElementAt(i).updateData(_data.currentTime);
@@ -69,6 +69,10 @@ class MapUI extends Stage {
     }
 
     private function tickerHandler():Void {
+        _trucksContainer.alpha -= 0.1;
+        if (_trucksContainer.alpha <= 0.0) {
+            _trucksContainer.alpha = 1.0;
+        }
         this.update();
     }
 }
