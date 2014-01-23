@@ -50,7 +50,7 @@
 		</copy>
 
 		<exec executable="haxe" dir="Player" failonerror="true">
-            <arg line="-cp src -js ${output.js}/Player.js -main com.tamina.bikewar.Player -debug"/>
+            <arg line="-cp src -js ${output.js}/Player.js -main com.tamina.bikewar.PlayerUI -debug"/>
             <arg line="-lib mconsole"/>
             <arg line="-lib msignal"/>
             <arg line="-lib createjs"/>
