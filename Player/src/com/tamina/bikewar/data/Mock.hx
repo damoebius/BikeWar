@@ -1,4 +1,5 @@
 package com.tamina.bikewar.data;
+import com.tamina.bikewar.game.Game;
 import com.tamina.bikewar.data.vo.BikeStationVO;
 import org.tamina.geom.Point;
 import com.tamina.bikewar.game.GameUtils;
@@ -16,7 +17,10 @@ class Mock {
             result.stations.push(stationsVO[i].toBikeStation(width, height));
         }
 // Camions
-        result.trucks.push(new Truck(result.players[0], new Point(100, 100)));
+        result.trucks.push(new Truck(result.players[0], Game.START_POINTS[0]));
+        result.trucks.push(new Truck(result.players[0], Game.START_POINTS[0]));
+        result.trucks.push(new Truck(result.players[1], Game.START_POINTS[1]));
+        result.trucks.push(new Truck(result.players[1], Game.START_POINTS[1]));
         return result;
     }
 

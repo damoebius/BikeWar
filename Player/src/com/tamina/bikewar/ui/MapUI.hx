@@ -54,7 +54,8 @@ class MapUI extends Stage {
             _stationsContainer.addElement(stationSprite);
         }
         for (i in 0..._data.trucks.length) {
-            var truckSprite = new TruckSprite( _data.trucks[i] );
+            var truckData = _data.trucks[i];
+            var truckSprite = new TruckSprite( truckData, truckData.owner.id == _data.players[0].id );
             truckSprite.x = _data.trucks[i].position.x;
             truckSprite.y = _data.trucks[i].position.y;
             _trucksContainer.addElement(truckSprite);

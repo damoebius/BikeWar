@@ -11,12 +11,7 @@
 	<target name="copy-debug-sources">
 		<mkdir dir="${output.haxe}"/>
 
-		<copy todir="${output.haxe}">
-			<fileset dir="${env.HAXEPATH}">
-				<include name="std/**"/>
-				<include name="lib/**"/>
-			</fileset>
-		</copy>
+
 	</target>
 
 	<target name="compile-player">
@@ -59,10 +54,7 @@
 
 		<replace file="${output.js}/Player.js.map" token="${sourceRootLine.token}"
 				 value="${sourceRootLine.value}"/>
-
-		<replace file="${output.js}/Player.js.map" token="/" value="\"/>
-		<replace file="${output.js}/Player.js.map" token="${env.HAXEPATH}" value="/haxe/"/>
-		<replace file="${output.js}/Player.js.map" token="${basedir}\sakuraEditor\src" value="/src/sakuraEditor" />
+        <replace file="${output.js}/Player.js.map" token="${env.BUILD_DIR}" value=""/>
 		<replace file="${output.js}/Player.js.map" token="\" value="/"/>
 	</target>
 

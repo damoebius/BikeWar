@@ -11,10 +11,14 @@ class TruckSprite extends Container {
     private var _backgroundContainer:Container;
     private var _backgroundBitmap:Bitmap;
 
-    public function new(data:Truck) {
+    public function new(data:Truck, isRedPlayer:Bool) {
         super();
         _data = data;
-        _backgroundBitmap = new Bitmap('images/truck_bg_0.png');
+        if (isRedPlayer) {
+            _backgroundBitmap = new Bitmap('images/truck_bg_0.png');
+        } else {
+            _backgroundBitmap = new Bitmap('images/truck_bg_1.png');
+        }
         _backgroundContainer = new Container();
         _backgroundContainer.addChild(_backgroundBitmap);
         this.addChild(_backgroundContainer);
