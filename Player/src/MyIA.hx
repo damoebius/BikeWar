@@ -25,13 +25,11 @@ class MyIA extends WorkerIA {
 
     override public function getOrders(context:MapData):Array<Order> {
         var result:Array<Order> = new Array<Order>();
-        if (_turnNum == 1) {
             for (i in 0...context.trucks.length) {
                 var truck = context.trucks[i];
-                if (truck.owner.id == this.id) {
+                if (truck.owner.id == this.id && truck.currentStation != null) {
                     result.push(new MoveOrder( truck.id, context.stations[ Math.round(Math.random() * context.stations.length)].id ));
                 }
-            }
 
         }
         _turnNum++;

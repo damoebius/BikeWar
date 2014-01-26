@@ -54,7 +54,7 @@
 
 		<replace file="${output.js}/Player.js.map" token="${sourceRootLine.token}"
 				 value="${sourceRootLine.value}"/>
-        <replace file="${output.js}/Player.js.map" token="${env.BUILD_DIR}" value=""/>
+        <replace file="${output.js}/Player.js.map" token="${env.BUILD_DIR}" value="src/Player"/>
 		<replace file="${output.js}/Player.js.map" token="\" value="/"/>
 	</target>
 

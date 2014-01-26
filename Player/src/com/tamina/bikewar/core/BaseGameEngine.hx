@@ -1,4 +1,9 @@
 package com.tamina.bikewar.core;
+import org.tamina.log.QuickLogger;
+import org.tamina.geom.Point;
+import com.tamina.bikewar.data.BikeStation;
+import com.tamina.bikewar.data.Truck;
+import com.tamina.bikewar.data.Order;
 import com.tamina.bikewar.data.Trend;
 import com.tamina.bikewar.game.GameUtils;
 import com.tamina.bikewar.data.PlayerResult;
@@ -12,6 +17,7 @@ import msignal.Signal;
 class BaseGameEngine {
 
     public var battle_completeSignal:Signal1<BattleResult>;
+    public var truck_moveSignal:Signal2<Truck,Point>;
     public var turn_completeSignal:Signal0;
 
     private var _currentTurn:Int;
@@ -59,6 +65,7 @@ class BaseGameEngine {
     public function new() {
         turn_completeSignal = new Signal0();
         battle_completeSignal = new Signal1<BattleResult>();
+        truck_moveSignal = new Signal2<Truck,Point>();
     }
 
     private function maxDuration_reachHandler(playerId:String):Void {
@@ -88,8 +95,8 @@ class BaseGameEngine {
     }
 
     private function computeCurrentTurn():Void {
-/*parseOrder();
-        moveShips();
+        parseOrder();
+        /*moveShips();
         increasePlanetGrowth();
         updatePlayerScore();*/
         updateBikeStations();
@@ -105,6 +112,72 @@ class BaseGameEngine {
             }
         }
 
+    }
+
+    private function parseOrder():Void {
+
+        var delta:Float = Math.random() * 2 - 1;
+        if (delta > 0) {
+            executeIAOrders(_IAList[0]);
+            executeIAOrders(_IAList[1]);
+        }
+        else {
+            executeIAOrders(_IAList[1]);
+            executeIAOrders(_IAList[0]);
+        }
+
+    }
+
+    private function executeIAOrders(ordersOwner:IIA):Void{
+        var orders:Array<Order> = ordersOwner.turnOrders;
+        for (i in 0...orders.length) {
+            var element:Order = orders[ i ];
+            var source:Truck = getTruckByID(element.truckId);
+            var target:BikeStation = getStationByID(element.targetStationId);
+            source.currentStation = null;
+            truck_moveSignal.dispatch(source,target.position);
+            QuickLogger.info('move truck ' + source.id);
+            /*if (isValidOrder(element, ordersOwner.playerId)) {
+
+                var s:Ship = new Ship( element.numUnits, source, target, _currentTurn );
+                _galaxy.fleet.push(s);
+                source.population -= element.numUnits;
+            }
+            else {
+                if (ordersOwner.playerId == _player1.id) {
+                    playerOneScore = 0;
+                    endBattle(new BattleResult( playerOneScore, playerTwoScore, _currentTurn, _player2, "Son adversaire a construit un ordre invalide", _player1, _player2, ErrorCode.INVALID_ORDER ));
+                }
+                else {
+                    playerTwoScore = 0;
+                    endBattle(new BattleResult( playerOneScore, playerTwoScore, _currentTurn, _player1, "Son adversaire a construit un ordre invalide", _player1, _player2, ErrorCode.INVALID_ORDER ));
+                }
+            }    */
+        }
+    }
+
+    private function getTruckByID(truckId:Float):Truck{
+        var result:Truck = null;
+        for (i in 0..._data.trucks.length) {
+            var p:Truck = _data.trucks[ i ];
+            if (p.id == truckId) {
+                result = p;
+                break;
+            }
+        }
+        return result;
+    }
+
+    private function getStationByID(stationId:Float):BikeStation{
+        var result:BikeStation = null;
+        for (i in 0..._data.stations.length) {
+            var p:BikeStation = _data.stations[ i ];
+            if (p.id == stationId) {
+                result = p;
+                break;
+            }
+        }
+        return result;
     }
 
     private function retrieveIAOrders():Void {

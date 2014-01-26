@@ -1,7 +1,21 @@
 package com.tamina.bikewar.game;
+import com.tamina.bikewar.data.Truck;
+import org.tamina.geom.Point;
 import com.tamina.bikewar.data.BikeStation;
 import com.tamina.bikewar.data.Trend;
 class GameUtils {
+
+    public static function getTravelDuration(source:Truck, target:BikeStation):Int{
+        var result:Int = 1000;
+        result = Math.ceil( getDistanceBetween( source.position, target.position) / Game.TRUCK_SPEED);
+        trace(result);
+        return result;
+    }
+
+    public static function getDistanceBetween( p1:Point, p2:Point ):Float
+    {
+        return Math.sqrt( Math.pow( ( p2.x - p1.x ), 2 ) + Math.pow( ( p2.y - p1.y ), 2 ) );
+    }
 
     public static function getCurrentRoundedDate():Date{
         var now = Date.now();

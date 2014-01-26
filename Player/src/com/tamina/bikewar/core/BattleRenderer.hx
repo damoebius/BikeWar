@@ -1,4 +1,6 @@
 package com.tamina.bikewar.core;
+import org.tamina.geom.Point;
+import com.tamina.bikewar.data.Truck;
 import com.tamina.bikewar.game.Game;
 import com.tamina.bikewar.data.MapData;
 import com.tamina.bikewar.ui.MapUI;
@@ -21,6 +23,7 @@ class BattleRenderer {
         _display.init(_data);
         _engine = new LiveGameEngine();
         _engine.turn_completeSignal.add(turnCompleteHandler);
+        _engine.truck_moveSignal.add(moveTruckHandler);
         start();
     }
 
@@ -30,6 +33,10 @@ class BattleRenderer {
         } else {
             trace("battle already started");
         }
+    }
+
+    private function moveTruckHandler(truck:Truck,destination:Point):Void{
+         _display.moveTruck(truck,destination);
     }
 
     private function turnCompleteHandler():Void{
