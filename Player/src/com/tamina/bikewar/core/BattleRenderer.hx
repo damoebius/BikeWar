@@ -1,4 +1,5 @@
 package com.tamina.bikewar.core;
+import com.tamina.bikewar.data.BikeStation;
 import org.tamina.geom.Point;
 import com.tamina.bikewar.data.Truck;
 import com.tamina.bikewar.game.Game;
@@ -35,7 +36,7 @@ class BattleRenderer {
         }
     }
 
-    private function moveTruckHandler(truck:Truck,destination:Point):Void{
+    private function moveTruckHandler(truck:Truck,destination:BikeStation):Void{
          _display.moveTruck(truck,destination);
     }
 

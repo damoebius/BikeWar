@@ -14,13 +14,16 @@ class Mock {
 // Stations
         var stationsVO = getStationsVO();
         for (i in 0...stationsVO.length) {
-            result.stations.push(stationsVO[i].toBikeStation(width, height));
+            var station = stationsVO[i].toBikeStation(width, height);
+            if (station.position.x > 0 && station.position.y > 0 && station.position.x < width && station.position.y < height) {
+                result.stations.push(station);
+            }
         }
 // Camions
-        result.trucks.push(new Truck(result.players[0], Game.START_POINTS[0]));
-        result.trucks.push(new Truck(result.players[0], Game.START_POINTS[0]));
-        result.trucks.push(new Truck(result.players[1], Game.START_POINTS[1]));
-        result.trucks.push(new Truck(result.players[1], Game.START_POINTS[1]));
+        result.trucks.push(new Truck(result.players[0], result.stations[ Math.floor( Math.random()*result.stations.length ) ].position));
+        result.trucks.push(new Truck(result.players[0], result.stations[ Math.floor( Math.random()*result.stations.length ) ].position));
+        result.trucks.push(new Truck(result.players[1], result.stations[ Math.floor( Math.random()*result.stations.length ) ].position));
+        result.trucks.push(new Truck(result.players[1], result.stations[ Math.floor( Math.random()*result.stations.length ) ].position));
         return result;
     }
 

@@ -1,4 +1,8 @@
 package com.tamina.bikewar.core;
+import com.tamina.bikewar.data.UnLoadingOrder;
+import com.tamina.bikewar.data.OrderType;
+import com.tamina.bikewar.data.LoadingOrder;
+import com.tamina.bikewar.data.MoveOrder;
 import org.tamina.log.QuickLogger;
 import org.tamina.geom.Point;
 import com.tamina.bikewar.data.BikeStation;
@@ -17,7 +21,7 @@ import msignal.Signal;
 class BaseGameEngine {
 
     public var battle_completeSignal:Signal1<BattleResult>;
-    public var truck_moveSignal:Signal2<Truck,Point>;
+    public var truck_moveSignal:Signal2<Truck, BikeStation>;
     public var turn_completeSignal:Signal0;
 
     private var _currentTurn:Int;
@@ -65,7 +69,7 @@ class BaseGameEngine {
     public function new() {
         turn_completeSignal = new Signal0();
         battle_completeSignal = new Signal1<BattleResult>();
-        truck_moveSignal = new Signal2<Truck,Point>();
+        truck_moveSignal = new Signal2<Truck, BikeStation>();
     }
 
     private function maxDuration_reachHandler(playerId:String):Void {
@@ -96,7 +100,7 @@ class BaseGameEngine {
 
     private function computeCurrentTurn():Void {
         parseOrder();
-        /*moveShips();
+/*moveShips();
         increasePlanetGrowth();
         updatePlayerScore();*/
         updateBikeStations();
@@ -128,16 +132,33 @@ class BaseGameEngine {
 
     }
 
-    private function executeIAOrders(ordersOwner:IIA):Void{
+    private function executeIAOrders(ordersOwner:IIA):Void {
         var orders:Array<Order> = ordersOwner.turnOrders;
         for (i in 0...orders.length) {
             var element:Order = orders[ i ];
             var source:Truck = getTruckByID(element.truckId);
             var target:BikeStation = getStationByID(element.targetStationId);
-            source.currentStation = null;
-            truck_moveSignal.dispatch(source,target.position);
-            QuickLogger.info('move truck ' + source.id);
-            /*if (isValidOrder(element, ordersOwner.playerId)) {
+            if (element.type == OrderType.MOVE) {
+                source.currentStation = null;
+                truck_moveSignal.dispatch(source, target);
+                QuickLogger.info('move truck ' + source.id);
+            } else if (element.type == OrderType.LOAD) {
+                var lo:LoadingOrder = cast element;
+                source.bikeNum += lo.bikeNum;
+                target.bikeNum -= lo.bikeNum;
+                target.owner = source.owner;
+                QuickLogger.info('load bike ' + source.id);
+            } else if (element.type == OrderType.UNLOAD) {
+                var lo:UnLoadingOrder = cast element;
+                source.bikeNum -= lo.bikeNum;
+                target.bikeNum += lo.bikeNum;
+                target.owner = source.owner;
+                QuickLogger.info('unload bike ' + source.id);
+            } else {
+                QuickLogger.error("order type inconnu");
+            }
+
+/*if (isValidOrder(element, ordersOwner.playerId)) {
 
                 var s:Ship = new Ship( element.numUnits, source, target, _currentTurn );
                 _galaxy.fleet.push(s);
@@ -156,7 +177,7 @@ class BaseGameEngine {
         }
     }
 
-    private function getTruckByID(truckId:Float):Truck{
+    private function getTruckByID(truckId:Float):Truck {
         var result:Truck = null;
         for (i in 0..._data.trucks.length) {
             var p:Truck = _data.trucks[ i ];
@@ -168,7 +189,7 @@ class BaseGameEngine {
         return result;
     }
 
-    private function getStationByID(stationId:Float):BikeStation{
+    private function getStationByID(stationId:Float):BikeStation {
         var result:BikeStation = null;
         for (i in 0..._data.stations.length) {
             var p:BikeStation = _data.stations[ i ];
@@ -193,17 +214,17 @@ class BaseGameEngine {
         for (i in 0..._data.stations.length) {
             var station = _data.stations[i];
             var trend = GameUtils.getBikeStationTrend(station, _data.currentTime);
-            var trendNum:Int=0;
+            var trendNum:Int = 0;
             switch(trend){
-                case Trend.INCREASE : Math.round( Math.random()*3 );
-                case Trend.DECREASE : -Math.round( Math.random()*3 );
-                case Trend.STABLE : trendNum = Math.round( Math.random()*2 ) -1;
+                case Trend.INCREASE : Math.round(Math.random() * 3);
+                case Trend.DECREASE : -Math.round(Math.random() * 3);
+                case Trend.STABLE : trendNum = Math.round(Math.random() * 2) - 1;
             }
             station.bikeNum += trendNum;
-            if(station.bikeNum < 0){
+            if (station.bikeNum < 0) {
                 station.bikeNum = 0;
             }
-            if(station.bikeNum > station.slotNum){
+            if (station.bikeNum > station.slotNum) {
                 station.bikeNum = station.slotNum;
             }
         }

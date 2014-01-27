@@ -1,4 +1,5 @@
 package com.tamina.bikewar.ui;
+import com.tamina.bikewar.data.BikeStation;
 import org.tamina.geom.Point;
 import com.tamina.bikewar.data.Truck;
 import createjs.easeljs.Shape;
@@ -69,9 +70,12 @@ class MapUI extends Stage {
         for (i in 0..._stationsContainer.getNumChildren()) {
             _stationsContainer.getElementAt(i).updateData(_data.currentTime);
         }
+        for (i in 0..._trucksContainer.getNumChildren()) {
+            _trucksContainer.getElementAt(i).updateData();
+        }
     }
 
-    public function moveTruck(truck:Truck,destination:Point):Void{
+    public function moveTruck(truck:Truck,destination:BikeStation):Void{
        var target:TruckSprite = getSpriteByTruck(truck);
         target.moveTo(destination);
     }

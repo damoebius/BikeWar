@@ -19,6 +19,7 @@ class TruckSprite extends Container {
     private var _backgroundContainer:Container;
     private var _backgroundBitmap:Bitmap;
     private var _tween:Tween;
+    private var _targetStation:BikeStation;
 
     public function new(data:Truck, isRedPlayer:Bool) {
         super();
@@ -41,14 +42,19 @@ class TruckSprite extends Container {
         this.addChild(_label);
     }
 
-    public function moveTo(target:Point):Void {
+    public function updateData():Void{
+        _label.text = Std.string(this.data.bikeNum);
+    }
+
+    public function moveTo(target:BikeStation):Void {
+        _targetStation = target;
+        if(_tween != null){
+            Tween.removeTweens(this);
+        }
         _tween = new Tween(this);
-        var targetStation = new BikeStation();
-        targetStation.position = target;
         _tween.addEventListener("change", moveChangeHandler);
-        _tween.to({x:target.x - 8, y:target.y - 8}, GameUtils.getTravelDuration(data, targetStation) * Game.GAME_SPEED);
+        _tween.to({x:_targetStation.position.x - 8, y:_targetStation.position.y - 8}, GameUtils.getTravelDuration(data, _targetStation) * Game.GAME_SPEED);
         _tween.call(moveEndedHandler);
-//_tween = Tween.get(this).to( new Point(_data.target.x, _data.target.y), _data.travelDuration * Game.GAME_SPEED).call(tweenCompleteHandler);
     }
 
     private function moveChangeHandler(event:Event):Void {
@@ -58,6 +64,6 @@ class TruckSprite extends Container {
 
     private function moveEndedHandler():Void {
         QuickLogger.info('move ended');
-        data.currentStation = new BikeStation();
+        data.currentStation = _targetStation;
     }
 }
