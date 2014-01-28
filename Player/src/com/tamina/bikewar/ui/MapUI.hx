@@ -21,6 +21,7 @@ class MapUI extends Stage {
     private var _trucksContainer:Group<TruckSprite>;
     private var _data:MapData;
     private var _dateText:Text;
+    private var _resultScreen:ResultScreen;
 
 
     public function new(display:HTMLCanvasElement, width:Int, height:Int) {
@@ -46,6 +47,13 @@ class MapUI extends Stage {
         Ticker.addEventListener(CreateJSEvent.TICKER_TICK, tickerHandler);
     }
 
+    public function showResultScreen(winner:String,resultMessage:String):Void {
+        _resultScreen = new ResultScreen(winner,resultMessage);
+        this.addChild( _resultScreen );
+        _resultScreen.x = Math.floor( _width / 2 - _resultScreen.getWidth() / 2);
+        _resultScreen.y = Math.floor( _height / 2 - _resultScreen.getHeight() / 2);
+    }
+
     public function init(data:MapData):Void {
         _data = data;
         _dateText.text = _data.currentTime.toString();
@@ -58,7 +66,7 @@ class MapUI extends Stage {
         }
         for (i in 0..._data.trucks.length) {
             var truckData = _data.trucks[i];
-            var truckSprite = new TruckSprite( truckData, truckData.owner.id == _data.players[0].id );
+            var truckSprite = new TruckSprite( truckData );
             truckSprite.x = _data.trucks[i].position.x;
             truckSprite.y = _data.trucks[i].position.y;
             _trucksContainer.addElement(truckSprite);

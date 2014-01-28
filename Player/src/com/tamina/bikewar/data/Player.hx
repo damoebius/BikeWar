@@ -22,6 +22,8 @@ class Player {
 	 * @internal
 	 */
 	public var script:String;
+
+    public var color:String;
 	
 	/**
 	 * Constructeur
@@ -29,10 +31,11 @@ class Player {
 	 * @param	color
 	 * @param	script
 	 */
-	public function new(name:String = "", script:String="")
+	public function new(name:String = "", script:String="", color:String="")
 	{
 		this.name = name;
 		this.script = script;
+        this.color = color;
 		this.id = Std.string( UID.getUID() );
 	}
 	

@@ -134,47 +134,101 @@ class BaseGameEngine {
 
     private function executeIAOrders(ordersOwner:IIA):Void {
         var orders:Array<Order> = ordersOwner.turnOrders;
-        for (i in 0...orders.length) {
-            var element:Order = orders[ i ];
-            var source:Truck = getTruckByID(element.truckId);
-            var target:BikeStation = getStationByID(element.targetStationId);
-            if (element.type == OrderType.MOVE) {
-                source.currentStation = null;
-                truck_moveSignal.dispatch(source, target);
-                QuickLogger.info('move truck ' + source.id);
-            } else if (element.type == OrderType.LOAD) {
-                var lo:LoadingOrder = cast element;
-                source.bikeNum += lo.bikeNum;
-                target.bikeNum -= lo.bikeNum;
-                target.owner = source.owner;
-                QuickLogger.info('load bike ' + source.id);
-            } else if (element.type == OrderType.UNLOAD) {
-                var lo:UnLoadingOrder = cast element;
-                source.bikeNum -= lo.bikeNum;
-                target.bikeNum += lo.bikeNum;
-                target.owner = source.owner;
-                QuickLogger.info('unload bike ' + source.id);
-            } else {
-                QuickLogger.error("order type inconnu");
-            }
-
-/*if (isValidOrder(element, ordersOwner.playerId)) {
-
-                var s:Ship = new Ship( element.numUnits, source, target, _currentTurn );
-                _galaxy.fleet.push(s);
-                source.population -= element.numUnits;
+        if (orders.length > 2) {
+            if (ordersOwner.playerId == _playerList[0].player.id) {
+                _playerList[0].score = 0;
+                endBattle(new BattleResult( _playerList, _currentTurn, _playerList[1].player, "Son adversaire a dépassé le nombre d'ordre authorisé" ));
             }
             else {
-                if (ordersOwner.playerId == _player1.id) {
-                    playerOneScore = 0;
-                    endBattle(new BattleResult( playerOneScore, playerTwoScore, _currentTurn, _player2, "Son adversaire a construit un ordre invalide", _player1, _player2, ErrorCode.INVALID_ORDER ));
+                _playerList[1].score = 0;
+                endBattle(new BattleResult( _playerList, _currentTurn, _playerList[0].player, "Son adversaire a dépassé le nombre d'ordre authorisé" ));
+            }
+        } else {
+            for (i in 0...orders.length) {
+                var element:Order = orders[ i ];
+                if (isValidOrder(element, ordersOwner.playerId)) {
+                    var source:Truck = getTruckByID(element.truckId);
+                    var target:BikeStation = getStationByID(element.targetStationId);
+                    if (element.type == OrderType.MOVE) {
+                        source.currentStation = null;
+                        truck_moveSignal.dispatch(source, target);
+                        QuickLogger.info('move truck ' + source.id);
+                    } else if (element.type == OrderType.LOAD) {
+                        var lo:LoadingOrder = cast element;
+                        source.bikeNum += lo.bikeNum;
+                        target.bikeNum -= lo.bikeNum;
+                        target.owner = source.owner;
+                        QuickLogger.info('load bike ' + source.id);
+                    } else if (element.type == OrderType.UNLOAD) {
+                        var lo:UnLoadingOrder = cast element;
+                        source.bikeNum -= lo.bikeNum;
+                        target.bikeNum += lo.bikeNum;
+                        target.owner = source.owner;
+                        QuickLogger.info('unload bike ' + source.id);
+                    } else {
+                        QuickLogger.error("order type inconnu");
+                    }
+                } else {
+                    if (ordersOwner.playerId == _playerList[0].player.id) {
+                        _playerList[0].score = 0;
+                        endBattle(new BattleResult( _playerList, _currentTurn, _playerList[1].player, "Son adversaire a construit un ordre invalide" ));
+                    }
+                    else {
+                        _playerList[1].score = 0;
+                        endBattle(new BattleResult( _playerList, _currentTurn, _playerList[0].player, "Son adversaire a construit un ordre invalide" ));
+                    }
                 }
-                else {
-                    playerTwoScore = 0;
-                    endBattle(new BattleResult( playerOneScore, playerTwoScore, _currentTurn, _player1, "Son adversaire a construit un ordre invalide", _player1, _player2, ErrorCode.INVALID_ORDER ));
-                }
-            }    */
+            }
         }
+    }
+
+    private function isValidOrder(order:Order, orderOwnerId:String):Bool {
+        var result:Bool = true;
+        var source:Truck = getTruckByID(order.truckId);
+        var target:BikeStation = getStationByID(order.targetStationId);
+        if (source == null) {
+            trace("Invalid Order : source inconnue");
+            result = false;
+        }
+        else if (target == null) {
+            trace("Invalid Order : target inconnue");
+            result = false;
+        }
+        else if (order.type == OrderType.LOAD) {
+            var loadOrder:LoadingOrder = cast order;
+            if (loadOrder.bikeNum + source.bikeNum > Game.TRUCK_NUM_SLOT) {
+                trace("Invalid Order : pas assez de place dans le camion");
+                result = false;
+            }
+            if (loadOrder.bikeNum > target.bikeNum) {
+                trace("Invalid Order : pas assez de vélo en station");
+                result = false;
+            }
+
+        }
+        else if (order.type == OrderType.UNLOAD) {
+            var unloadOrder:UnLoadingOrder = cast order;
+            if (unloadOrder.bikeNum + source.bikeNum > target.slotNum) {
+                trace("Invalid Order : pas assez de place en station");
+                result = false;
+            }
+            if (unloadOrder.bikeNum > target.bikeNum) {
+                trace("Invalid Order : pas assez de vélo");
+                result = false;
+            }
+
+        }
+        else if (source.owner.id != orderOwnerId) {
+            trace("Invalid Order : le proprietaire du camion n'est pas le meme que celui de l'ordre");
+            trace("Order source owner id : " + source.owner.id);
+            result = false;
+        }
+        if (result == false) {
+            trace("Order Owner : " + orderOwnerId);
+            trace("Order sourceID : " + order.truckId);
+            trace("Order targetID : " + order.targetStationId);
+        }
+        return result;
     }
 
     private function getTruckByID(truckId:Float):Truck {

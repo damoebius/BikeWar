@@ -1,4 +1,5 @@
 package com.tamina.bikewar.core;
+import com.tamina.bikewar.data.BattleResult;
 import com.tamina.bikewar.data.BikeStation;
 import org.tamina.geom.Point;
 import com.tamina.bikewar.data.Truck;
@@ -25,6 +26,7 @@ class BattleRenderer {
         _engine = new LiveGameEngine();
         _engine.turn_completeSignal.add(turnCompleteHandler);
         _engine.truck_moveSignal.add(moveTruckHandler);
+        _engine.battle_completeSignal.add(endBattleHandler);
         start();
     }
 
@@ -34,6 +36,10 @@ class BattleRenderer {
         } else {
             trace("battle already started");
         }
+    }
+
+    private function endBattleHandler(result:BattleResult):Void{
+       _display.showResultScreen(result.winner.name,result.message);
     }
 
     private function moveTruckHandler(truck:Truck,destination:BikeStation):Void{

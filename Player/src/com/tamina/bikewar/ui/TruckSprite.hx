@@ -1,4 +1,5 @@
 package com.tamina.bikewar.ui;
+import com.tamina.bikewar.data.PlayerColor;
 import com.tamina.bikewar.game.Game;
 import com.tamina.bikewar.game.GameUtils;
 import com.tamina.bikewar.data.BikeStation;
@@ -21,10 +22,10 @@ class TruckSprite extends Container {
     private var _tween:Tween;
     private var _targetStation:BikeStation;
 
-    public function new(data:Truck, isRedPlayer:Bool) {
+    public function new(data:Truck) {
         super();
         this.data = data;
-        if (isRedPlayer) {
+        if (data.owner.color == PlayerColor.RED) {
             _backgroundBitmap = new Bitmap('images/truck_bg_0.png');
         } else {
             _backgroundBitmap = new Bitmap('images/truck_bg_1.png');

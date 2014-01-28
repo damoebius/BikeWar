@@ -1,4 +1,5 @@
 package com.tamina.bikewar.ui;
+import createjs.easeljs.Shape;
 import com.tamina.bikewar.game.GameUtils;
 import com.tamina.bikewar.data.Trend;
 import createjs.easeljs.Text;
@@ -15,6 +16,7 @@ class BikeStationSprite extends Container {
     private var _outBackgroundBitmap:Bitmap;
     private var _label:Text;
     private var _backgroundContainer:Container;
+    private var _ownerShape:Shape;
 
     public function new(data:BikeStation, currentTime:Date) {
         super();
@@ -37,13 +39,29 @@ class BikeStationSprite extends Container {
 
         this.addChild(_label);
 
+        _ownerShape = new Shape();
+        this.addChild(_ownerShape);
+
         updateBackground();
     }
 
     public function updateData(currentTime:Date):Void{
         _label.text = Std.string(_data.bikeNum);
         _currentTime = currentTime;
+        updateOwnerShape();
         updateBackground();
+    }
+
+    private function updateOwnerShape():Void{
+        _ownerShape.graphics.clear();
+        if(_data.owner != null){
+            _ownerShape.graphics.beginFill( _data.owner.color);
+            _ownerShape.graphics.moveTo(25,10);
+            _ownerShape.graphics.lineTo(32,10);
+            _ownerShape.graphics.lineTo(32,17);
+            _ownerShape.graphics.lineTo(25,10);
+            _ownerShape.graphics.endFill();
+        }
     }
 
     private function updateBackground():Void{

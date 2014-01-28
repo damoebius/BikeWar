@@ -2,6 +2,7 @@ package com.tamina.bikewar;
 
 //import com.tamina.bikewar.core.BattleRenderer;
 
+import com.tamina.bikewar.data.PlayerColor;
 import com.tamina.bikewar.data.Player;
 import com.tamina.bikewar.data.Mock;
 import com.tamina.bikewar.ui.UIElementId;
@@ -29,8 +30,8 @@ import com.tamina.bikewar.core.BattleRenderer;
         applicationCanvas.width = DEFAULT_WIDTH;
         applicationCanvas.height = DEFAULT_HEIGHT;
         var players:Array<Player> = new Array<Player>();
-        players.push(new Player(firstPlayerName, firstPlayerScript));
-        players.push(new Player(secondPlayerName, secondPlayerScript));
+        players.push(new Player(firstPlayerName, firstPlayerScript, PlayerColor.RED));
+        players.push(new Player(secondPlayerName, secondPlayerScript,PlayerColor.BLUE));
         var renderer:BattleRenderer = new BattleRenderer(applicationCanvas, DEFAULT_WIDTH, DEFAULT_HEIGHT, Mock.getMap(DEFAULT_WIDTH, DEFAULT_HEIGHT,players));
     }
 }
