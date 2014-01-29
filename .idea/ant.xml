@@ -5,6 +5,8 @@
       <customJdkName value="1.6" />
       <properties>
         <property name="env.DEPLOY_DIR" value="C:/wamp/www" />
+        <property name="env.BUILD_DIR" value="$PROJECT_DIR$/Player/src" />
+        <property name="env.DEPLOY_URL" value="http://localhost:8686/bikewar/" />
       </properties>
     </buildFile>
   </component>

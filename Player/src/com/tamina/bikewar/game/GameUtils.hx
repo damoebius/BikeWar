@@ -17,6 +17,10 @@ class GameUtils {
         return Math.sqrt( Math.pow( ( p2.x - p1.x ), 2 ) + Math.pow( ( p2.y - p1.y ), 2 ) );
     }
 
+    public static function hasStationEnoughBike(station:BikeStation):Bool{
+        return (station.bikeNum > station.slotNum/4 && station.bikeNum < station.slotNum/4*3);
+    }
+
     public static function getCurrentRoundedDate():Date{
         var now = Date.now();
         var minutes = now.getMinutes();

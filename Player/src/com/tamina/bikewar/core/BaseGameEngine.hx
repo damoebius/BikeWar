@@ -32,7 +32,7 @@ class BaseGameEngine {
     private var _startBattleDate:Date;
 
     private var _IAList:Array<IIA>;
-    private var _playerList:Array<PlayerResult>;
+    public var playerList:Array<PlayerResult>;
 
 
     private function get_isComputing():Bool {
@@ -45,9 +45,9 @@ class BaseGameEngine {
         _currentTurn = 0;
         _isComputing = false;
         _data = data;
-        _playerList = new Array<PlayerResult>();
-        _playerList.push(new PlayerResult( _data.players[0]));
-        _playerList.push(new PlayerResult( _data.players[1]));
+        playerList = new Array<PlayerResult>();
+        playerList.push(new PlayerResult( _data.players[0]));
+        playerList.push(new PlayerResult( _data.players[1]));
 
 
         _IAList[0].turnResult_completeSignal.add(IA_ordersResultHandler);
@@ -74,11 +74,11 @@ class BaseGameEngine {
 
     private function maxDuration_reachHandler(playerId:String):Void {
         trace("max duration reached");
-        if (playerId == _playerList[0].player.id) {
-            endBattle(new BattleResult( _playerList, _currentTurn, _playerList[1].player, "DUREE DU TOUR TROP LONGUE" ));
+        if (playerId == playerList[0].player.id) {
+            endBattle(new BattleResult( playerList, _currentTurn, playerList[1].player, "DUREE DU TOUR TROP LONGUE" ));
         }
         else {
-            endBattle(new BattleResult( _playerList, _currentTurn, _playerList[0].player, "DUREE DU TOUR TROP LONGUE" ));
+            endBattle(new BattleResult( playerList, _currentTurn, playerList[0].player, "DUREE DU TOUR TROP LONGUE" ));
         }
     }
 
@@ -90,30 +90,53 @@ class BaseGameEngine {
 
     private function turnResultErrorHandler(playerId:String):Void {
         trace("turn result error");
-        if (playerId == _playerList[0].player.id) {
-            endBattle(new BattleResult( _playerList, _currentTurn, _playerList[1].player, "RESULTAT DU TOUR INATTENDU" ));
+        if (playerId == playerList[0].player.id) {
+            endBattle(new BattleResult( playerList, _currentTurn, playerList[1].player, "RESULTAT DU TOUR INATTENDU" ));
         }
         else {
-            endBattle(new BattleResult( _playerList, _currentTurn, _playerList[0].player, "RESULTAT DU TOUR INATTENDU" ));
+            endBattle(new BattleResult( playerList, _currentTurn, playerList[0].player, "RESULTAT DU TOUR INATTENDU" ));
         }
     }
 
     private function computeCurrentTurn():Void {
         parseOrder();
-/*moveShips();
-        increasePlanetGrowth();
-        updatePlayerScore();*/
         updateBikeStations();
+        updatePlayerScore();
         _data.currentTime = Date.fromTime(_data.currentTime.getTime() + Game.TURN_TIME);
         turn_completeSignal.dispatch();
         _currentTurn++;
         if (_isComputing && _currentTurn >= _maxNumTurn) {
-            if (_playerList[0].score > _playerList[1].score) {
-                endBattle(new BattleResult( _playerList, _currentTurn, _playerList[0].player, "DUREE MAX ATTEINTE" ));
+            if (playerList[0].score > playerList[1].score) {
+                endBattle(new BattleResult( playerList, _currentTurn, playerList[0].player, "DUREE MAX ATTEINTE" ));
             }
             else {
-                endBattle(new BattleResult( _playerList, _currentTurn, _playerList[1].player, "DUREE MAX ATTEINTE" ));
+                endBattle(new BattleResult( playerList, _currentTurn, playerList[1].player, "DUREE MAX ATTEINTE" ));
             }
+        }
+
+    }
+
+    private function updatePlayerScore():Void {
+        playerList[0].score = 0;
+        playerList[1].score = 0;
+
+        for (i in 0..._data.stations.length) {
+            var s:BikeStation = _data.stations[ i ];
+            if (s.owner != null && s.owner.id == playerList[0].player.id) {
+                if (GameUtils.hasStationEnoughBike(s)) {
+                    playerList[0].score++;
+                } else {
+                    playerList[0].score--;
+                }
+            }
+            else if (s.owner != null && s.owner.id == playerList[1].player.id) {
+                if (GameUtils.hasStationEnoughBike(s)) {
+                    playerList[1].score++;
+                } else {
+                    playerList[1].score--;
+                }
+            }
+
         }
 
     }
@@ -135,13 +158,13 @@ class BaseGameEngine {
     private function executeIAOrders(ordersOwner:IIA):Void {
         var orders:Array<Order> = ordersOwner.turnOrders;
         if (orders.length > 2) {
-            if (ordersOwner.playerId == _playerList[0].player.id) {
-                _playerList[0].score = 0;
-                endBattle(new BattleResult( _playerList, _currentTurn, _playerList[1].player, "Son adversaire a dépassé le nombre d'ordre authorisé" ));
+            if (ordersOwner.playerId == playerList[0].player.id) {
+                playerList[0].score = -100;
+                endBattle(new BattleResult( playerList, _currentTurn, playerList[1].player, "Son adversaire a dépassé le nombre d'ordre authorisé" ));
             }
             else {
-                _playerList[1].score = 0;
-                endBattle(new BattleResult( _playerList, _currentTurn, _playerList[0].player, "Son adversaire a dépassé le nombre d'ordre authorisé" ));
+                playerList[1].score = -100;
+                endBattle(new BattleResult( playerList, _currentTurn, playerList[0].player, "Son adversaire a dépassé le nombre d'ordre authorisé" ));
             }
         } else {
             for (i in 0...orders.length) {
@@ -169,13 +192,13 @@ class BaseGameEngine {
                         QuickLogger.error("order type inconnu");
                     }
                 } else {
-                    if (ordersOwner.playerId == _playerList[0].player.id) {
-                        _playerList[0].score = 0;
-                        endBattle(new BattleResult( _playerList, _currentTurn, _playerList[1].player, "Son adversaire a construit un ordre invalide" ));
+                    if (ordersOwner.playerId == playerList[0].player.id) {
+                        playerList[0].score = -100;
+                        endBattle(new BattleResult( playerList, _currentTurn, playerList[1].player, "Son adversaire a construit un ordre invalide" ));
                     }
                     else {
-                        _playerList[1].score = 0;
-                        endBattle(new BattleResult( _playerList, _currentTurn, _playerList[0].player, "Son adversaire a construit un ordre invalide" ));
+                        playerList[1].score = -100;
+                        endBattle(new BattleResult( playerList, _currentTurn, playerList[0].player, "Son adversaire a construit un ordre invalide" ));
                     }
                 }
             }
@@ -208,12 +231,12 @@ class BaseGameEngine {
         }
         else if (order.type == OrderType.UNLOAD) {
             var unloadOrder:UnLoadingOrder = cast order;
-            if (unloadOrder.bikeNum + source.bikeNum > target.slotNum) {
+            if (unloadOrder.bikeNum + target.bikeNum > target.slotNum) {
                 trace("Invalid Order : pas assez de place en station");
                 result = false;
             }
-            if (unloadOrder.bikeNum > target.bikeNum) {
-                trace("Invalid Order : pas assez de vélo");
+            if (unloadOrder.bikeNum > source.bikeNum) {
+                trace("Invalid Order : pas assez de vélo " + unloadOrder.bikeNum + "//" + target.bikeNum);
                 result = false;
             }
 
@@ -287,7 +310,7 @@ class BaseGameEngine {
     private function endBattle(result:BattleResult):Player {
         _isComputing = false;
         _endBattleDate = Date.now();
-        trace("fin du match : " + _playerList[0].player.name + " = " + _playerList[0].score + "// " + _playerList[1].player.name + " = " + _playerList[1].score + " // WINNER " + result.winner.name);
+        trace("fin du match : " + playerList[0].player.name + " = " + playerList[0].score + "// " + playerList[1].player.name + " = " + playerList[1].score + " // WINNER " + result.winner.name);
         trace("battle duration " + ( _endBattleDate.getTime() - _startBattleDate.getTime() ) / 1000 + " sec");
         battle_completeSignal.dispatch(result);
         return result.winner;

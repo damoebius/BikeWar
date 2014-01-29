@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>BikeWar</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
 </head>
 <body style="margin: 0px;">
@@ -11,8 +12,16 @@
  <div>
      <canvas id="applicationCanvas" style="border: 1px white solid;width: 1353px; height: 549px"/>
  </div>
- <div>
-     <img src="images/footer.png">
+ <div class="footer">
+     <div id="playerOneName" class="playerName" style="position:absolute; left:20px;">Unknown</div>
+     <div id="playerTwoName" class="playerName" style="position:absolute; text-align:right;">Unknown</div>
+     <div style="position:absolute;text-align:center;width: 1353px;">
+         <span class="score">score</span>
+         <span id="playerOneScore" class="playerOneScore">0</span>
+         <button id="fightButton" class="fightButton">FIGHT</button>
+         <span id="playerTwoScore" class="playerTwoScore">0</span>
+         <span class="score">score</span>
+     </div>
  </div>
  <script src="http://code.createjs.com/easeljs-0.7.1.min.js"></script>
  <script src="http://code.createjs.com/tweenjs-0.5.1.min.js"></script>

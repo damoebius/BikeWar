@@ -45,29 +45,29 @@ class BikeStationSprite extends Container {
         updateBackground();
     }
 
-    public function updateData(currentTime:Date):Void{
+    public function updateData(currentTime:Date):Void {
         _label.text = Std.string(_data.bikeNum);
         _currentTime = currentTime;
         updateOwnerShape();
         updateBackground();
     }
 
-    private function updateOwnerShape():Void{
+    private function updateOwnerShape():Void {
         _ownerShape.graphics.clear();
-        if(_data.owner != null){
-            _ownerShape.graphics.beginFill( _data.owner.color);
-            _ownerShape.graphics.moveTo(25,10);
-            _ownerShape.graphics.lineTo(32,10);
-            _ownerShape.graphics.lineTo(32,17);
-            _ownerShape.graphics.lineTo(25,10);
+        if (_data.owner != null) {
+            _ownerShape.graphics.beginFill(_data.owner.color);
+            _ownerShape.graphics.moveTo(25, 10);
+            _ownerShape.graphics.lineTo(32, 10);
+            _ownerShape.graphics.lineTo(32, 17);
+            _ownerShape.graphics.lineTo(25, 10);
             _ownerShape.graphics.endFill();
         }
     }
 
-    private function updateBackground():Void{
+    private function updateBackground():Void {
         _backgroundContainer.removeAllChildren();
         var targetBackground:Bitmap = _defaultBackgroundBitmap;
-        if(_data.bikeNum < _data.slotNum/4 || _data.bikeNum > _data.slotNum/4*3){
+        if (!GameUtils.hasStationEnoughBike(_data)) {
             targetBackground = _outBackgroundBitmap;
         }
         _backgroundContainer.addChild(targetBackground);

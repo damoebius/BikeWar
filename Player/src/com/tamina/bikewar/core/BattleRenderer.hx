@@ -1,4 +1,8 @@
 package com.tamina.bikewar.core;
+import org.tamina.log.QuickLogger;
+import js.html.Element;
+import com.tamina.bikewar.ui.UIElementId;
+import js.Browser;
 import com.tamina.bikewar.data.BattleResult;
 import com.tamina.bikewar.data.BikeStation;
 import org.tamina.geom.Point;
@@ -27,7 +31,10 @@ class BattleRenderer {
         _engine.turn_completeSignal.add(turnCompleteHandler);
         _engine.truck_moveSignal.add(moveTruckHandler);
         _engine.battle_completeSignal.add(endBattleHandler);
-        start();
+        Browser.document.getElementById(UIElementId.PLAYER_ONE_NAME).innerHTML = _data.players[0].name;
+        Browser.document.getElementById(UIElementId.PLAYER_TWO_NAME).innerHTML = _data.players[1].name;
+        var fightButton:Element = Browser.document.getElementById(UIElementId.FIGHT_BUTTON);
+        fightButton.addEventListener('click',fightHandler);
     }
 
     public function start():Void {
@@ -36,6 +43,11 @@ class BattleRenderer {
         } else {
             trace("battle already started");
         }
+    }
+
+    private function fightHandler(event):Void {
+        QuickLogger.info('FIGHT');
+        start();
     }
 
     private function endBattleHandler(result:BattleResult):Void{
@@ -47,6 +59,8 @@ class BattleRenderer {
     }
 
     private function turnCompleteHandler():Void{
+        Browser.document.getElementById(UIElementId.PLAYER_ONE_SCORE).innerHTML = Std.string(_engine.playerList[0].score);
+        Browser.document.getElementById(UIElementId.PLAYER_TWO_SCORE).innerHTML = Std.string(_engine.playerList[1].score);
         _display.updateData();
     }
 }

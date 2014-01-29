@@ -2,3 +2,31 @@
     font-family: Pixel01;
     src: url('../fonts/04B_09__.TTF');
 }
+
+.footer{
+    width:1353px;
+    background-image: url("../images/footer.png");
+}
+.playerName {
+    width:1353px;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size:18px;
+    color:#6be8e0;
+    /*text-align: center;*/
+    margin: 0px;
+}
+.playerTwoScore {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size:18px;
+    color:#1494ea;
+}
+.playerOneScore {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size:18px;
+    color:#e41b4e;
+}
+.score {
+    font-family:"Arial";
+    font-size:10px;
+    color:#333333;
+}

@@ -5,6 +5,7 @@ package ;
  * @author d.mouton
  */
 
+import com.tamina.bikewar.game.GameUtils;
 import com.tamina.bikewar.data.UnLoadingOrder;
 import com.tamina.bikewar.game.Game;
 import com.tamina.bikewar.data.LoadingOrder;
@@ -32,14 +33,22 @@ class MyIA extends WorkerIA {
         for (i in 0...context.trucks.length) {
             var truck = context.trucks[i];
             if (truck.owner.id == this.id && truck.currentStation != null) {
-                debugMessage = "Tour " + _turnNum + ", truck " + truck.id + " : in station ";
+                debugMessage = "Tour " + _turnNum + ", truck " + truck.id + " : in station with " + truck.bikeNum +" bikes";
                 if (Lambda.has(_movingTruckId, truck.id)) {
                     debugMessage += " loading";
                     _movingTruckId.remove(truck.id);
-                    if (truck.bikeNum >= Game.TRUCK_NUM_SLOT) {
-                        result.push(new UnLoadingOrder(truck.id, truck.currentStation.id, truck.bikeNum));
-                    } else {
-                        result.push(new LoadingOrder(truck.id, truck.currentStation.id, 1));
+                    if ( truck.currentStation.bikeNum < truck.currentStation.slotNum/4) {
+                      if(truck.bikeNum > 0){
+                          result.push(new UnLoadingOrder(truck.id, truck.currentStation.id, 1));
+                      }
+                    } else if(truck.currentStation.bikeNum > truck.currentStation.slotNum/4*3){
+                        if(truck.bikeNum < Game.TRUCK_NUM_SLOT){
+                            result.push(new LoadingOrder(truck.id, truck.currentStation.id, 1));
+                        }
+                    } else if(GameUtils.hasStationEnoughBike(truck.currentStation)){
+                        if(truck.bikeNum < Game.TRUCK_NUM_SLOT){
+                            result.push(new LoadingOrder(truck.id, truck.currentStation.id, 1));
+                        }
                     }
                 } else {
                     debugMessage += " moving";
