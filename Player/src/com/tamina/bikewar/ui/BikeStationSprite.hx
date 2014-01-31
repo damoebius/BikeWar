@@ -9,6 +9,9 @@ import com.tamina.bikewar.data.BikeStation;
 import createjs.easeljs.Sprite;
 class BikeStationSprite extends Container {
 
+    public static var PADDING_LEFT:Int=17;
+    public static var PADDING_TOP:Int=25;
+
     private var _data:BikeStation;
     private var _currentTime:Date;
 

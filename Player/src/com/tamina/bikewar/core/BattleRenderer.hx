@@ -20,13 +20,15 @@ class BattleRenderer {
     private var _data:MapData;
     private var _width:Int;
     private var _height:Int;
+    private var _debugMode:Bool;
 
-    public function new(canvas:HTMLCanvasElement, width:Int, height:Int, data:MapData) {
+    public function new(canvas:HTMLCanvasElement, width:Int, height:Int, data:MapData, debugMode=false) {
+        _debugMode = debugMode;
         _data = data;
         _width = width;
         _height = height;
         _display = new MapUI(canvas, _width, _height);
-        _display.init(_data);
+        _display.init(_data,debugMode);
         _engine = new LiveGameEngine();
         _engine.turn_completeSignal.add(turnCompleteHandler);
         _engine.truck_moveSignal.add(moveTruckHandler);

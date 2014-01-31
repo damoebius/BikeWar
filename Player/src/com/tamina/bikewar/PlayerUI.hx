@@ -24,7 +24,7 @@ import com.tamina.bikewar.core.BattleRenderer;
         QuickLogger.info("instantiation de l'application ");
     }
 
-    static function init(firstPlayerName:String, firstPlayerScript:String, secondPlayerName:String, secondPlayerScript:String):Void {
+    static function init(firstPlayerName:String, firstPlayerScript:String, secondPlayerName:String, secondPlayerScript:String,debugMode:Bool=false):Void {
         QuickLogger.info("init " + firstPlayerName + " vs " + secondPlayerName);
         var applicationCanvas:HTMLCanvasElement = cast Browser.document.getElementById(UIElementId.APPLICATION_CANVAS);
         applicationCanvas.width = DEFAULT_WIDTH;
@@ -32,6 +32,6 @@ import com.tamina.bikewar.core.BattleRenderer;
         var players:Array<Player> = new Array<Player>();
         players.push(new Player(firstPlayerName, firstPlayerScript, PlayerColor.RED));
         players.push(new Player(secondPlayerName, secondPlayerScript,PlayerColor.BLUE));
-        var renderer:BattleRenderer = new BattleRenderer(applicationCanvas, DEFAULT_WIDTH, DEFAULT_HEIGHT, Mock.getMap(DEFAULT_WIDTH, DEFAULT_HEIGHT,players));
+        var renderer:BattleRenderer = new BattleRenderer(applicationCanvas, DEFAULT_WIDTH, DEFAULT_HEIGHT, Mock.getMap(DEFAULT_WIDTH, DEFAULT_HEIGHT,players),debugMode);
     }
 }

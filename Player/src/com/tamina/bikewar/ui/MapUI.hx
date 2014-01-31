@@ -1,4 +1,6 @@
 package com.tamina.bikewar.ui;
+import org.tamina.geom.Junction;
+import org.tamina.geom.Junction;
 import com.tamina.bikewar.data.BikeStation;
 import org.tamina.geom.Point;
 import com.tamina.bikewar.data.Truck;
@@ -22,6 +24,8 @@ class MapUI extends Stage {
     private var _data:MapData;
     private var _dateText:Text;
     private var _resultScreen:ResultScreen;
+    private var _roadsSprite:RoadSprite;
+    private var _debugMode:Bool;
 
 
     public function new(display:HTMLCanvasElement, width:Int, height:Int) {
@@ -44,32 +48,44 @@ class MapUI extends Stage {
         _dateText.font = "30px Arial";
         _dateText.textAlign = 'left';
         this.addChild(_dateText);
+
+        _roadsSprite = new RoadSprite(width, height);
+        this.addChild(_roadsSprite);
+
         Ticker.addEventListener(CreateJSEvent.TICKER_TICK, tickerHandler);
     }
 
-    public function showResultScreen(winner:String,resultMessage:String):Void {
-        _resultScreen = new ResultScreen(winner,resultMessage);
-        this.addChild( _resultScreen );
-        _resultScreen.x = Math.floor( _width / 2 - _resultScreen.getWidth() / 2);
-        _resultScreen.y = Math.floor( _height / 2 - _resultScreen.getHeight() / 2);
+    public function showResultScreen(winner:String, resultMessage:String):Void {
+        _resultScreen = new ResultScreen(winner, resultMessage);
+        this.addChild(_resultScreen);
+        _resultScreen.x = Math.floor(_width / 2 - _resultScreen.getWidth() / 2);
+        _resultScreen.y = Math.floor(_height / 2 - _resultScreen.getHeight() / 2);
     }
 
-    public function init(data:MapData):Void {
+    public function init(data:MapData, debugMode:Bool = false):Void {
         _data = data;
+        _debugMode = debugMode;
         _dateText.text = _data.currentTime.toString();
-        trace(_data.stations.length);
+        var roads:Array<Junction> = new Array<Junction>();
         for (i in 0..._data.stations.length) {
+            if(_debugMode){
+                roads.push( new Junction(_data.stations[i].position.x,_data.stations[i].position.y) );
+            }
             var stationSprite = new BikeStationSprite( _data.stations[i], _data.currentTime );
-            stationSprite.x = _data.stations[i].position.x;
-            stationSprite.y = _data.stations[i].position.y;
+            stationSprite.x = _data.stations[i].position.x - BikeStationSprite.PADDING_LEFT;
+            stationSprite.y = _data.stations[i].position.y - BikeStationSprite.PADDING_TOP;
             _stationsContainer.addElement(stationSprite);
         }
-        for (i in 0..._data.trucks.length) {
-            var truckData = _data.trucks[i];
-            var truckSprite = new TruckSprite( truckData );
-            truckSprite.x = _data.trucks[i].position.x;
-            truckSprite.y = _data.trucks[i].position.y;
-            _trucksContainer.addElement(truckSprite);
+        if (!_debugMode) {
+            for (i in 0..._data.trucks.length) {
+                var truckData = _data.trucks[i];
+                var truckSprite = new TruckSprite( truckData );
+                truckSprite.x = _data.trucks[i].position.x;
+                truckSprite.y = _data.trucks[i].position.y;
+                _trucksContainer.addElement(truckSprite);
+            }
+        } else {
+            _roadsSprite.displayRoads(roads);
         }
     }
 
@@ -83,12 +99,12 @@ class MapUI extends Stage {
         }
     }
 
-    public function moveTruck(truck:Truck,destination:BikeStation):Void{
-       var target:TruckSprite = getSpriteByTruck(truck);
+    public function moveTruck(truck:Truck, destination:BikeStation):Void {
+        var target:TruckSprite = getSpriteByTruck(truck);
         target.moveTo(destination);
     }
 
-    private function getSpriteByTruck(data:Truck):TruckSprite{
+    private function getSpriteByTruck(data:Truck):TruckSprite {
         var result:TruckSprite = null;
         for (i in 0..._trucksContainer.getNumChildren()) {
             var p:TruckSprite = _trucksContainer.getElementAt(i);

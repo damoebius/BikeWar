@@ -1,4 +1,5 @@
 package com.tamina.bikewar.data;
+import org.tamina.geom.Junction;
 import com.tamina.bikewar.game.Game;
 import com.tamina.bikewar.data.vo.BikeStationVO;
 import org.tamina.geom.Point;
@@ -29,7 +30,7 @@ class Mock {
 
     public static function getStation(width:Int, height:Int):BikeStation {
         var result:BikeStation = new BikeStation();
-        result.position = new Point( Math.round(Math.random() * width), Math.round(Math.random() * height));
+        result.position = new Junction( Math.round(Math.random() * width), Math.round(Math.random() * height));
         result.slotNum = Math.round(Math.random() * 30);
         result.bikeNum = Math.round(Math.random() * result.slotNum);
         for (i in 0...96) {

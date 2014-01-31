@@ -1,4 +1,5 @@
 package com.tamina.bikewar.data.vo;
+import org.tamina.geom.Junction;
 import org.tamina.geom.Point;
 class BikeStationVO {
     public var id:String;
@@ -34,7 +35,7 @@ class BikeStationVO {
 
     public function toBikeStation(width:Int, height:Int):BikeStation{
         var result:BikeStation = new BikeStation();
-        result.position = new Point( Math.round(width * ( this.longitude - northEastGPS.x ) / ( southWestGPS.x - northEastGPS.x ))-17, Math.round( height * ( northEastGPS.y - this.latitude ) / ( northEastGPS.y - southWestGPS.y ))-25 );
+        result.position = new Junction( Math.round(width * ( this.longitude - northEastGPS.x ) / ( southWestGPS.x - northEastGPS.x )), Math.round( height * ( northEastGPS.y - this.latitude ) / ( northEastGPS.y - southWestGPS.y )) );
         result.slotNum = this.numSlot;
         result.bikeNum = Math.round(Math.random() * result.slotNum);
         for (i in 0...96) {
