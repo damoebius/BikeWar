@@ -28,14 +28,14 @@ class BikeStationVO {
         this.zone = Std.parseInt(zone);
         this.riveDroite = riveDroite;
         this.rocade = rocade;
-        northEastGPS = new Point(-0.618948,44.862166);
-        southWestGPS = new Point(-0.508407,44.829026);
+        northEastGPS = new Point(-0.621948,44.862166);
+        southWestGPS = new Point(-0.505407,44.829026);
 
     }
 
     public function toBikeStation(width:Int, height:Int):BikeStation{
         var result:BikeStation = new BikeStation();
-        result.position = new Junction( Math.round(width * ( this.longitude - northEastGPS.x ) / ( southWestGPS.x - northEastGPS.x )), Math.round( height * ( northEastGPS.y - this.latitude ) / ( northEastGPS.y - southWestGPS.y )) );
+        result.position = new Junction( Math.round(width * ( this.longitude - northEastGPS.x ) / ( southWestGPS.x - northEastGPS.x )), Math.round( height * ( northEastGPS.y - this.latitude ) / ( northEastGPS.y - southWestGPS.y )), id );
         result.slotNum = this.numSlot;
         result.bikeNum = Math.round(Math.random() * result.slotNum);
         for (i in 0...96) {

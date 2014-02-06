@@ -66,11 +66,7 @@ class MapUI extends Stage {
         _data = data;
         _debugMode = debugMode;
         _dateText.text = _data.currentTime.toString();
-        var roads:Array<Junction> = new Array<Junction>();
         for (i in 0..._data.stations.length) {
-            if(_debugMode){
-                roads.push( new Junction(_data.stations[i].position.x,_data.stations[i].position.y) );
-            }
             var stationSprite = new BikeStationSprite( _data.stations[i], _data.currentTime );
             stationSprite.x = _data.stations[i].position.x - BikeStationSprite.PADDING_LEFT;
             stationSprite.y = _data.stations[i].position.y - BikeStationSprite.PADDING_TOP;
@@ -85,7 +81,7 @@ class MapUI extends Stage {
                 _trucksContainer.addElement(truckSprite);
             }
         } else {
-            _roadsSprite.displayRoads(roads);
+            _roadsSprite.displayRoads( _data.roads );
         }
     }
 
