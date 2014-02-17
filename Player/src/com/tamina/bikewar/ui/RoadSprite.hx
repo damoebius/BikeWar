@@ -78,6 +78,7 @@ class RoadSprite extends Container {
     private function mouseDownHandler(event:MouseEvent):Void{
         _selectedJunctionShape = null;
         var j:Junction = new Junction(event.rawX,event.rawY);
+        _roads.push(j);
         var s:JunctionShape = new JunctionShape(j);
         s.addEventListener(CreateJSEvent.MOUSE_DOWN, junction_mouseDownHandler);
         this.addChild(s);
