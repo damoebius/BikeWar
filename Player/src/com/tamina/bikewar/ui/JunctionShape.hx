@@ -14,4 +14,11 @@ class JunctionShape extends Shape {
         this.graphics.drawRect(-3,-3,6,6);
         this.graphics.endFill();
     }
+
+    public function select():Void{
+        this.graphics.clear();
+        this.graphics.beginFill("#00FF00");
+        this.graphics.drawRect(-3,-3,6,6);
+        this.graphics.endFill();
+    }
 }

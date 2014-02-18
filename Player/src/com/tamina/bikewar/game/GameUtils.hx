@@ -1,4 +1,8 @@
 package com.tamina.bikewar.game;
+import com.tamina.bikewar.data.Path;
+import com.tamina.bikewar.core.PathFinder;
+import com.tamina.bikewar.data.MapData;
+import org.tamina.geom.Junction;
 import com.tamina.bikewar.data.Truck;
 import org.tamina.geom.Point;
 import com.tamina.bikewar.data.BikeStation;
@@ -19,6 +23,11 @@ class GameUtils {
 
     public static function hasStationEnoughBike(station:BikeStation):Bool{
         return (station.bikeNum > station.slotNum/4 && station.bikeNum < station.slotNum/4*3);
+    }
+
+    public static function getPath(fromStation:BikeStation,toStation:BikeStation, map:MapData):Path{
+        var p = new PathFinder();
+        return p.getPath(fromStation,toStation,map);
     }
 
     public static function getCurrentRoundedDate():Date{

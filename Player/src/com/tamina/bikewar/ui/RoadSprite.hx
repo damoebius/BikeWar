@@ -1,4 +1,5 @@
 package com.tamina.bikewar.ui;
+import org.tamina.view.Group;
 import haxe.Serializer;
 import createjs.easeljs.Shape;
 import createjs.easeljs.MouseEvent;
@@ -6,6 +7,8 @@ import org.tamina.events.CreateJSEvent;
 import org.tamina.geom.Junction;
 import createjs.easeljs.Container;
 class RoadSprite extends Container {
+
+    public var junctionGroup:Group<JunctionShape>;
 
     private var _roads:Array<Junction>;
 
@@ -35,6 +38,8 @@ class RoadSprite extends Container {
         _exportButton.x = 1040;
         this.addChild(_exportButton);
         _exportButton.addEventListener(CreateJSEvent.MOUSE_DOWN, export_mouseDownHandler);
+        junctionGroup = new Group<JunctionShape>();
+        this.addChild(junctionGroup);
     }
 
     public function displayRoads(roads:Array<Junction>):Void{
@@ -49,7 +54,7 @@ class RoadSprite extends Container {
                 _linksShape.graphics.endStroke();
             }
             s.addEventListener(CreateJSEvent.MOUSE_DOWN, junction_mouseDownHandler);
-            this.addChild(s);
+            junctionGroup.addChild(s);
         }
     }
 
@@ -81,6 +86,6 @@ class RoadSprite extends Container {
         _roads.push(j);
         var s:JunctionShape = new JunctionShape(j);
         s.addEventListener(CreateJSEvent.MOUSE_DOWN, junction_mouseDownHandler);
-        this.addChild(s);
+        junctionGroup.addChild(s);
     }
 }

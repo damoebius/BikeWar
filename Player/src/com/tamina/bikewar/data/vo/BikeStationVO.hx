@@ -38,6 +38,8 @@ class BikeStationVO {
         result.position = new Junction( Math.round(width * ( this.longitude - northEastGPS.x ) / ( southWestGPS.x - northEastGPS.x )), Math.round( height * ( northEastGPS.y - this.latitude ) / ( northEastGPS.y - southWestGPS.y )), id );
         result.slotNum = this.numSlot;
         result.bikeNum = Math.round(Math.random() * result.slotNum);
+        result.id = Std.parseFloat(id);
+        result.name = name;
         for (i in 0...96) {
             result.profile.push(Math.round(Math.random() * result.slotNum));
         }

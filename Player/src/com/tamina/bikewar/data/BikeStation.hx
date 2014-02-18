@@ -10,6 +10,7 @@ class BikeStation {
     public var position:Junction;
     public var owner:Player;
     public var profile:Array<Int>;
+    public var name:String='';
 
     public function new() {
         profile = new Array<Int>();

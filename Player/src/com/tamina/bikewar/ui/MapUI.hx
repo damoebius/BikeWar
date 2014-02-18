@@ -1,4 +1,5 @@
 package com.tamina.bikewar.ui;
+import com.tamina.bikewar.game.GameUtils;
 import org.tamina.geom.Junction;
 import org.tamina.geom.Junction;
 import com.tamina.bikewar.data.BikeStation;
@@ -81,7 +82,18 @@ class MapUI extends Stage {
                 _trucksContainer.addElement(truckSprite);
             }
         } else {
-            _roadsSprite.displayRoads( _data.roads );
+            _roadsSprite.displayRoads(_data.roads);
+        }
+
+// test path finding
+        var p = GameUtils.getPath(_data.stations[27], _data.stations[61], _data);
+        for (i in 0...p.length) {
+            for (j in 0..._roadsSprite.junctionGroup.getNumChildren()) {
+                var currentJunctionShape:JunctionShape = _roadsSprite.junctionGroup.getElementAt(j);
+                if (currentJunctionShape.data.id == p.getItemAt(i).id) {
+                    currentJunctionShape.select();
+                }
+            }
         }
     }
 
