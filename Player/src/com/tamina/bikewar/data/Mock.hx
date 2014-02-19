@@ -32,10 +32,10 @@ class Mock {
             result.roads[i].id = Std.string( UID.getUID() );
         }
 // Camions
-        result.trucks.push(new Truck(result.players[0], result.stations[ Math.floor( Math.random()*result.stations.length ) ].position));
-        result.trucks.push(new Truck(result.players[0], result.stations[ Math.floor( Math.random()*result.stations.length ) ].position));
-        result.trucks.push(new Truck(result.players[1], result.stations[ Math.floor( Math.random()*result.stations.length ) ].position));
-        result.trucks.push(new Truck(result.players[1], result.stations[ Math.floor( Math.random()*result.stations.length ) ].position));
+        result.trucks.push(new Truck(result.players[0], result.stations[ Math.floor( Math.random()*result.stations.length ) ]));
+        result.trucks.push(new Truck(result.players[0], result.stations[ Math.floor( Math.random()*result.stations.length ) ]));
+        result.trucks.push(new Truck(result.players[1], result.stations[ Math.floor( Math.random()*result.stations.length ) ]));
+        result.trucks.push(new Truck(result.players[1], result.stations[ Math.floor( Math.random()*result.stations.length ) ]));
         return result;
     }
 

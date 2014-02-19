@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="HAXE_MODULE" version="4">
   <component name="HaxeModuleSettingsStorage">
-    <option name="arguments" value="-lib mconsole -lib msignal -lib createjs -lib taminahx  -debug" />
+    <option name="arguments" value="-lib mconsole -lib msignal -lib createjs -lib taminahx" />
     <option name="haxeTarget" value="JavaScript" />
     <option name="mainClass" value="com.tamina.bikewar.PlayerUI" />
     <option name="outputFileName" value="Player.js" />

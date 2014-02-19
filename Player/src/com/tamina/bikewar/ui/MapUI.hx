@@ -1,4 +1,5 @@
 package com.tamina.bikewar.ui;
+import createjs.tweenjs.MotionGuidePlugin;
 import com.tamina.bikewar.game.GameUtils;
 import org.tamina.geom.Junction;
 import org.tamina.geom.Junction;
@@ -31,6 +32,7 @@ class MapUI extends Stage {
 
     public function new(display:HTMLCanvasElement, width:Int, height:Int) {
         super(display);
+        MotionGuidePlugin.install();
         _width = width;
         _height = height;
         _backgroundBitmap = new Bitmap("images/map.png");
@@ -86,7 +88,7 @@ class MapUI extends Stage {
         }
 
 // test path finding
-        var p = GameUtils.getPath(_data.stations[27], _data.stations[61], _data);
+        /*var p = GameUtils.getPath(_data.stations[27], _data.stations[61], _data);
         for (i in 0...p.length) {
             for (j in 0..._roadsSprite.junctionGroup.getNumChildren()) {
                 var currentJunctionShape:JunctionShape = _roadsSprite.junctionGroup.getElementAt(j);
@@ -94,7 +96,7 @@ class MapUI extends Stage {
                     currentJunctionShape.select();
                 }
             }
-        }
+        }  */
     }
 
     public function updateData():Void {
@@ -109,7 +111,7 @@ class MapUI extends Stage {
 
     public function moveTruck(truck:Truck, destination:BikeStation):Void {
         var target:TruckSprite = getSpriteByTruck(truck);
-        target.moveTo(destination);
+        target.moveTo(destination,_data);
     }
 
     private function getSpriteByTruck(data:Truck):TruckSprite {

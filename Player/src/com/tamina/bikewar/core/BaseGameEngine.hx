@@ -173,7 +173,6 @@ class BaseGameEngine {
                     var source:Truck = getTruckByID(element.truckId);
                     var target:BikeStation = getStationByID(element.targetStationId);
                     if (element.type == OrderType.MOVE) {
-                        source.currentStation = null;
                         truck_moveSignal.dispatch(source, target);
                         QuickLogger.info('move truck ' + source.id);
                     } else if (element.type == OrderType.LOAD) {

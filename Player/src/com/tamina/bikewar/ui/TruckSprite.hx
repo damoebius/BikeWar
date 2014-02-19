@@ -1,4 +1,7 @@
 package com.tamina.bikewar.ui;
+import com.tamina.bikewar.tween.AnimatePath;
+import com.tamina.bikewar.data.MapData;
+import com.tamina.bikewar.data.Path;
 import com.tamina.bikewar.data.PlayerColor;
 import com.tamina.bikewar.game.Game;
 import com.tamina.bikewar.game.GameUtils;
@@ -19,8 +22,8 @@ class TruckSprite extends Container {
     private var _label:Text;
     private var _backgroundContainer:Container;
     private var _backgroundBitmap:Bitmap;
-    private var _tween:Tween;
     private var _targetStation:BikeStation;
+    private var _motion:AnimatePath;
 
     public function new(data:Truck) {
         super();
@@ -31,34 +34,47 @@ class TruckSprite extends Container {
             _backgroundBitmap = new Bitmap('images/truck_bg_1.png');
         }
         _backgroundContainer = new Container();
+        _backgroundContainer.x = -27;
+        _backgroundContainer.y = -24;
         _backgroundContainer.addChild(_backgroundBitmap);
         this.addChild(_backgroundContainer);
         _label = new Text();
-        _label.x = 27;
-        _label.y = 24;
+        _label.x = 0;
+        _label.y = 0;
         _label.textAlign = 'center';
         _label.color = '#000000';
         _label.font = "08px Pixel01";
         _label.text = Std.string(this.data.bikeNum);
         this.addChild(_label);
+        _motion = new AnimatePath(this);
+        _motion.moveSignal.add(moveChangeHandler);
+        _motion.completeSignal.add(moveEndedHandler);
     }
 
     public function updateData():Void{
         _label.text = Std.string(this.data.bikeNum);
     }
 
-    public function moveTo(target:BikeStation):Void {
+    public function moveTo(target:BikeStation, map:MapData):Void {
         _targetStation = target;
-        if(_tween != null){
+        var path:Path = GameUtils.getPath(data.currentStation,_targetStation,map);
+        data.currentStation = null;
+
+        _motion.animate(path);
+
+
+
+
+       /* if(_tween != null){
             Tween.removeTweens(this);
         }
         _tween = new Tween(this);
         _tween.addEventListener("change", moveChangeHandler);
-        _tween.to({x:_targetStation.position.x - 8, y:_targetStation.position.y - 8}, GameUtils.getTravelDuration(data, _targetStation) * Game.GAME_SPEED);
-        _tween.call(moveEndedHandler);
+        _tween.to({guide:{ path:path.getGuide() }}, GameUtils.getTravelDuration(data, _targetStation) * Game.GAME_SPEED);
+        _tween.call(moveEndedHandler); */
     }
 
-    private function moveChangeHandler(event:Event):Void {
+    private function moveChangeHandler():Void {
         data.position.x = this.x;
         data.position.y = this.y;
     }

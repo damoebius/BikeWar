@@ -33,9 +33,9 @@ class MyIA extends WorkerIA {
         for (i in 0...context.trucks.length) {
             var truck = context.trucks[i];
             if (truck.owner.id == this.id && truck.currentStation != null) {
-                debugMessage = "Tour " + _turnNum + ", truck " + truck.id + " : in station with " + truck.bikeNum +" bikes";
+                //debugMessage = "Tour " + _turnNum + ", truck " + truck.id + " : in station with " + truck.bikeNum +" bikes";
                 if (Lambda.has(_movingTruckId, truck.id)) {
-                    debugMessage += " loading";
+                    //debugMessage += " loading";
                     _movingTruckId.remove(truck.id);
                     if ( truck.currentStation.bikeNum < truck.currentStation.slotNum/4) {
                       if(truck.bikeNum > 0){
@@ -51,13 +51,13 @@ class MyIA extends WorkerIA {
                         }
                     }
                 } else {
-                    debugMessage += " moving";
+                    //debugMessage += " moving";
                     _movingTruckId.push(truck.id);
                     result.push(new MoveOrder( truck.id, context.stations[ Math.round(Math.random() * context.stations.length)].id ));
                 }
 
             }  else {
-                debugMessage = "travelling...";
+                //debugMessage = "travelling...";
             }
 
         }

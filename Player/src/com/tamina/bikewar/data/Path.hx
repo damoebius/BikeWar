@@ -40,6 +40,15 @@ class Path {
         return result;
     }
 
+    public function getGuide():Array<Float>{
+        var result = new Array<Float>();
+        for(i in 0..._content.length){
+            result.push(_content[i].x - 8);
+            result.push(_content[i].y - 8);
+        }
+        return result;
+    }
+
     public function getItemAt(index:Int):Junction {
         return _content[index];
     }

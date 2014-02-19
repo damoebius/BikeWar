@@ -1,11 +1,8 @@
 package com.tamina.bikewar.core;
 import com.tamina.bikewar.data.Path;
-import org.tamina.log.QuickLogger;
 import org.tamina.geom.Junction;
 import com.tamina.bikewar.data.MapData;
 import com.tamina.bikewar.data.BikeStation;
-
-//typedef Path = Array<Junction>;
 
 class PathFinder {
 
@@ -58,7 +55,6 @@ class PathFinder {
                 break;
             }
         }
-        trace(_inc) ;
         if (!result && _inc < 50) {
             find();
         }
@@ -75,7 +71,7 @@ class PathFinder {
                 p.push(nextJunction);
                 _result = p;
                 break;
-            } else if ( !Path.contains(nextJunction, _paths) && checkPathDirection(nextJunction)) {
+            } else if ( !Path.contains(nextJunction, _paths) ) {
                 var p:Path = target.copy();
                 p.push(nextJunction);
                 _paths.push(p);

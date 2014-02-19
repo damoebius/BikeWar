@@ -9,11 +9,11 @@ class Truck {
     public var position:Point;
     public var currentStation:BikeStation;
 
-    public function new(owner:Player,position:Point) {
+    public function new(owner:Player,currentStation:BikeStation) {
         this.id = UID.getUID();
         this.owner = owner;
-        this.position = position;
+        this.currentStation = currentStation;
+        this.position = currentStation.position;
         this.bikeNum = 0;
-        this.currentStation = new BikeStation();
     }
 }
