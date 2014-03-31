@@ -1,4 +1,5 @@
 package com.tamina.bikewar.ui;
+import com.tamina.bikewar.core.Global;
 import com.tamina.bikewar.tween.AnimatePath;
 import com.tamina.bikewar.data.MapData;
 import com.tamina.bikewar.data.Path;
@@ -29,9 +30,9 @@ class TruckSprite extends Container {
         super();
         this.data = data;
         if (data.owner.color == PlayerColor.RED) {
-            _backgroundBitmap = new Bitmap('images/truck_bg_0.png');
+            _backgroundBitmap = new Bitmap(Global.IMG_BASE_PATH + 'images/truck_bg_0.png');
         } else {
-            _backgroundBitmap = new Bitmap('images/truck_bg_1.png');
+            _backgroundBitmap = new Bitmap(Global.IMG_BASE_PATH + 'images/truck_bg_1.png');
         }
         _backgroundContainer = new Container();
         _backgroundContainer.x = -27;

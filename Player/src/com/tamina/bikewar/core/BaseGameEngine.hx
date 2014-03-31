@@ -117,8 +117,8 @@ class BaseGameEngine {
     }
 
     private function updatePlayerScore():Void {
-        playerList[0].score = 0;
-        playerList[1].score = 0;
+        //playerList[0].score = 0;
+        //playerList[1].score = 0;
 
         for (i in 0..._data.stations.length) {
             var s:BikeStation = _data.stations[ i ];

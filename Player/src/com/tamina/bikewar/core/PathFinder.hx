@@ -63,6 +63,9 @@ class PathFinder {
     private function checkPath(target:Path):Bool {
         var result:Bool = false;
         var currentJunction = target.getLastItem();
+        if(currentJunction.links == null){
+            trace('Null Pointer Exception : links on Junctions ' + currentJunction.id);
+        }
         for (i in 0...currentJunction.links.length) {
             var nextJunction = currentJunction.links[i];
             if (nextJunction.id == _target.id) {

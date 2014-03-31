@@ -1,4 +1,5 @@
 package com.tamina.bikewar.ui;
+import com.tamina.bikewar.core.Global;
 import createjs.easeljs.Bitmap;
 import createjs.easeljs.Container;
 import createjs.easeljs.Shape;
@@ -29,7 +30,7 @@ class ResultScreen extends Container
 		_backgroundShape.graphics.beginFill("#CCCCCC");
 		_backgroundShape.graphics.drawRoundRect(0.0, 0.0, WIDTH, HEIGHT, 0.0);
 		_backgroundShape.graphics.endFill();
-		_trophyBitmap = new Bitmap( "images/trophy.png" );
+		_trophyBitmap = new Bitmap( Global.IMG_BASE_PATH +  "images/trophy.png" );
 		this.addChild(_trophyBitmap);
 		_trophyBitmap.y = 125.0 - 64.0;
 		_trophyBitmap.x = 20.0;

@@ -1,4 +1,5 @@
 package com.tamina.bikewar.ui;
+import com.tamina.bikewar.core.Global;
 import createjs.easeljs.Shape;
 import com.tamina.bikewar.game.GameUtils;
 import com.tamina.bikewar.data.Trend;
@@ -25,8 +26,8 @@ class BikeStationSprite extends Container {
         super();
         _data = data;
         _currentTime = currentTime;
-        _defaultBackgroundBitmap = new Bitmap('images/stationBackground_defaut.png');
-        _outBackgroundBitmap = new Bitmap('images/stationBackground_out.png');
+        _defaultBackgroundBitmap = new Bitmap(Global.IMG_BASE_PATH + 'images/stationBackground_defaut.png');
+        _outBackgroundBitmap = new Bitmap(Global.IMG_BASE_PATH + 'images/stationBackground_out.png');
 
         _backgroundContainer = new Container();
         this.addChild(_backgroundContainer);

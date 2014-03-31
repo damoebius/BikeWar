@@ -7,6 +7,6 @@ class PlayerResult {
 
     public function new(player:Player) {
         this.player = player;
-        this.score = 0;
+        this.score = 100;
     }
 }

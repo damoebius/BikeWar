@@ -1,4 +1,5 @@
 package com.tamina.bikewar.ui;
+import com.tamina.bikewar.core.Global;
 import createjs.tweenjs.MotionGuidePlugin;
 import com.tamina.bikewar.game.GameUtils;
 import org.tamina.geom.Junction;
@@ -35,7 +36,7 @@ class MapUI extends Stage {
         MotionGuidePlugin.install();
         _width = width;
         _height = height;
-        _backgroundBitmap = new Bitmap("images/map.png");
+        _backgroundBitmap = new Bitmap(Global.IMG_BASE_PATH +  "images/map.png");
         this.addChild(_backgroundBitmap);
         _stationsContainer = new Group<BikeStationSprite>();
         _trucksContainer = new Group<TruckSprite>();
