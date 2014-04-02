@@ -7,6 +7,7 @@ class Game {
     public static var TRUCK_NUM_SLOT:Int = 10;
     public static var MAX_TURN_DURATION:Int = 1000;
     public static var TURN_TIME:Int = 1000*30*15;
+    public static var MAX_SCORE:Int = 4000;
 
     private static function get_START_POINTS():Array<Point> {
         var result:Array<Point> = new Array<Point>();

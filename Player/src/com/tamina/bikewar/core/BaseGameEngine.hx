@@ -138,6 +138,11 @@ class BaseGameEngine {
             }
 
         }
+        if(playerList[0].score >= Game.MAX_SCORE){
+            endBattle(new BattleResult( playerList, _currentTurn, playerList[0].player, "SCORE MAX" ));
+        } else if(playerList[1].score >= Game.MAX_SCORE){
+            endBattle(new BattleResult( playerList, _currentTurn, playerList[1].player, "SCORE MAX" ));
+        }
 
     }
 
