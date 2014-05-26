@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="taminahx" type="haXe">
+  <library name="taminahx">
     <CLASSES>
       <root url="file://C:/HaxeToolkit/haxe/lib/taminahx/git" />
     </CLASSES>

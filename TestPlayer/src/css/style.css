@@ -32,10 +32,11 @@ body {
 
 .bikewar .footer {
     width: 100%;
-    height: 75px;
+    height: 85px;
     position: absolute;
     bottom: 10px;
     text-align: center;
+    margin: auto;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -53,6 +54,19 @@ body {
     background: url("../images/buttonPressed.png") no-repeat scroll 0 0 transparent;
 }
 
+.scoreBarPink{
+    width: 100px;
+    height: 24px;
+    background: url('../images/scoreBarCursor.png') repeat-x scroll 0 0 transparent;
+}
+
+.scoreBarOrange{
+    width: 100px;
+    height: 24px;
+    background: url('../images/scoreBarCursor2.png') repeat-x scroll 0 0 transparent;
+}
+
+
 .playerName {
     width: 1353px;
     font-family: 'Open Sans Condensed', sans-serif;
@@ -62,14 +76,15 @@ body {
     margin: 0px;
 }
 
-.playerTwoScore {
+.playerOneScore {
+    background: url('../images/scoreBackground.png') repeat-x scroll 0 0 transparent;
     font-family: 'Open Sans Condensed', sans-serif;
     font-size: 18px;
-    color: #1494ea;
+    color: #FFFFFF;
 }
 
-.playerOneScore {
-    background: url('../images/scoreBackground.png') repeat-x scroll 0 0 transparent
+.playerTwoScore {
+    background: url('../images/scoreBackground2.png') repeat-x scroll 0 0 transparent;
     font-family: 'Open Sans Condensed', sans-serif;
     font-size: 18px;
     color: #FFFFFF;

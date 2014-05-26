@@ -11,29 +11,70 @@
         <img src="images/logo.png">
      </div>
      <div class="application">
-         <canvas id="applicationCanvas" style="border: 1px white solid;width: 1353px; height: 549px"/>
+         <canvas id="applicationCanvas" style="border: 0px white solid;width: 1353px; height: 549px"/>
      </div>
      <div class="footer">
-         <table>
-             <tr>
-                 <td valign="bottom">
-                     <div class="playerOneScore">
-                         <img src="images/scoreBorderLeft.png">
-                         585
-                         <img src="images/scoreBorderRight.png">
-                     </div>
+         <table width="100%">
+             <tr width="100%">
+                 <td width="100%" align="center">
+                     <table cellpadding="0px" cellspacing="0px">
+                         <tr>
+                             <td valign="bottom">
+                                 <img src="images/scoreBorderLeft.png">
+                             </td>
+                             <td valign="bottom" style="padding-bottom: 5px;">
+                                 <div class="playerOneScore">
+                                     0
+                                 </div>
 
-                 </td>
-                 <td>
-                     <button id="fightButton" class="fightButton"></button>
+                             </td>
+                             <td valign="bottom">
+                                 <img src="images/scoreBorderRight.png">
+                             </td>
+                             <td valign="bottom">
+                                 <div class="scoreBarPink">
+                                 </div>
+                             </td>
+                             <td valign="bottom" style="padding-bottom: 5px;">
+                                 <img src="images/scoreBarCorner.png">
+                             </td>
+                             <td>
+                                 <button id="fightButton" class="fightButton"></button>
+                             </td>
+                             <td valign="bottom" style="padding-bottom: 5px;">
+                                 <img src="images/scoreBarCorner2.png">
+                             </td>
+                             <td valign="bottom">
+                                 <div class="scoreBarOrange">
+                                 </div>
+
+                             </td>
+                             <td valign="bottom">
+                                 <img src="images/scoreBorderLeft2.png">
+                             </td>
+                             <td valign="bottom" style="padding-bottom: 5px;">
+                                 <div class="playerTwoScore">
+                                     0
+                                 </div>
+                             </td>
+                             <td valign="bottom">
+                                 <img src="images/scoreBorderRight2.png">
+                             </td>
+
+                         </tr>
+                     </table>
                  </td>
              </tr>
          </table>
+
      </div>
  </div>
  <script src="http://code.createjs.com/easeljs-0.7.1.min.js"></script>
  <script src="http://code.createjs.com/tweenjs-0.5.1.min.js"></script>
  <script src="js/release/Player.js"></script>
+ <script>
+     com.tamina.bikewar.PlayerUI.init("damo","js/release/MyIA.js","moebius","js/release/MyIA.js",false);
+ </script>
  <!-- <div>
      <canvas id="applicationCanvas" style="border: 1px white solid;width: 1353px; height: 549px"/>
  </div>

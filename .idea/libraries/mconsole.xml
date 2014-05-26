@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="mconsole" type="haXe">
+  <library name="mconsole">
     <CLASSES>
       <root url="file://C:/HaxeToolkit/haxe/lib/mconsole/1,4,0" />
     </CLASSES>

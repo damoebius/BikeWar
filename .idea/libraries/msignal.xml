@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="msignal" type="haXe">
+  <library name="msignal">
     <CLASSES>
       <root url="file://C:/HaxeToolkit/haxe/lib/msignal/1,2,1" />
     </CLASSES>
