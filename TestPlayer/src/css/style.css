@@ -16,8 +16,8 @@ body {
 .bikewar {
     width: 100%;
     height: 100%;
-    background-image: url("../images/map.png");
-    background-position: center 85px;
+    background-image: url("../images/mapBackground.png");
+    background-position: center 5px;
     background-repeat: no-repeat;
 }
 
@@ -69,8 +69,8 @@ body {
 
 .playerName {
     width: 1353px;
-    font-family: 'Open Sans Condensed', sans-serif;
-    font-size: 18px;
+    font-family: 'Pixel01', sans-serif;
+    font-size: 10px;
     color: #6be8e0;
     /*text-align: center;*/
     margin: 0px;
@@ -81,6 +81,7 @@ body {
     font-family: 'Open Sans Condensed', sans-serif;
     font-size: 18px;
     color: #FFFFFF;
+    height: 24px;
 }
 
 .playerTwoScore {
@@ -88,6 +89,7 @@ body {
     font-family: 'Open Sans Condensed', sans-serif;
     font-size: 18px;
     color: #FFFFFF;
+    height: 24px;
 }
 
 .score {

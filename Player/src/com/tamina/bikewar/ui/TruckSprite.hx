@@ -35,15 +35,15 @@ class TruckSprite extends Container {
             _backgroundBitmap = new Bitmap(Global.IMG_BASE_PATH + 'images/truck_bg_1.png');
         }
         _backgroundContainer = new Container();
-        _backgroundContainer.x = -27;
-        _backgroundContainer.y = -24;
+        _backgroundContainer.x = -28;
+        _backgroundContainer.y = -23;
         _backgroundContainer.addChild(_backgroundBitmap);
         this.addChild(_backgroundContainer);
         _label = new Text();
         _label.x = 0;
         _label.y = 0;
         _label.textAlign = 'center';
-        _label.color = '#000000';
+        _label.color = '#ffffff';
         _label.font = "08px Pixel01";
         _label.text = Std.string(this.data.bikeNum);
         this.addChild(_label);

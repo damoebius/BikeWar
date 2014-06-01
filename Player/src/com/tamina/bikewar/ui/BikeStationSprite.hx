@@ -34,9 +34,9 @@ class BikeStationSprite extends Container {
 
         _label = new Text();
         _label.x = 18;
-        _label.y = 11;
+        _label.y = 12;
         _label.textAlign = 'center';
-        _label.color = '#000000';
+        _label.color = '#FFFFFF';
         _label.font = "08px Pixel01";
         _label.text = Std.string(_data.bikeNum);
 

@@ -21,7 +21,6 @@ class MapUI extends Stage {
 
     private var _width:Int;
     private var _height:Int;
-    private var _backgroundBitmap:Bitmap;
     private var _stationsContainer:Group<BikeStationSprite>;
     private var _trucksContainer:Group<TruckSprite>;
     private var _data:MapData;
@@ -36,8 +35,6 @@ class MapUI extends Stage {
         MotionGuidePlugin.install();
         _width = width;
         _height = height;
-        _backgroundBitmap = new Bitmap(Global.IMG_BASE_PATH +  "images/map.png");
-        this.addChild(_backgroundBitmap);
         _stationsContainer = new Group<BikeStationSprite>();
         _trucksContainer = new Group<TruckSprite>();
         this.addChild(_stationsContainer);
@@ -54,7 +51,7 @@ class MapUI extends Stage {
         this.addChild(_dateText);
 
         _roadsSprite = new RoadSprite(width, height);
-        this.addChild(_roadsSprite);
+       // this.addChild(_roadsSprite);
 
         Ticker.addEventListener(CreateJSEvent.TICKER_TICK, tickerHandler);
     }
@@ -128,10 +125,10 @@ class MapUI extends Stage {
     }
 
     private function tickerHandler():Void {
-        _trucksContainer.alpha -= 0.1;
+        /*_trucksContainer.alpha -= 0.1;
         if (_trucksContainer.alpha <= 0.0) {
             _trucksContainer.alpha = 1.0;
-        }
+        }  */
         this.update();
     }
 }

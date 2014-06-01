@@ -82,7 +82,7 @@
         </copy>
     </target>
 
-	<target name="build" depends="clean, copy-static-resources, compile-all"/>
+	<target name="build" depends="clean, copy-static-resources, compile-all, deploy"/>
 
 	<target name="build-debug" depends="clean, copy-static-resources, compile-all-debug"/>
 
