@@ -14,5 +14,7 @@ class UIElementId
 	inline public static var FIGHT_BUTTON:String = "fightButton";
 	inline public static var PLAYER_ONE_SCORE:String = "playerOneScore";
 	inline public static var PLAYER_TWO_SCORE:String = "playerTwoScore";
+    inline public static var PLAYER_ONE_SCOREBAR:String = "playerOneScoreBar";
+    inline public static var PLAYER_TWO_SCOREBAR:String = "playerTwoScoreBar";
 	
 }

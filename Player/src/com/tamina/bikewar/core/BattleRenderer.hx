@@ -71,6 +71,16 @@ class BattleRenderer {
     private function turnCompleteHandler():Void {
         Browser.document.getElementById(UIElementId.PLAYER_ONE_SCORE).innerHTML = Std.string(_engine.playerList[0].score);
         Browser.document.getElementById(UIElementId.PLAYER_TWO_SCORE).innerHTML = Std.string(_engine.playerList[1].score);
+        var score1 = 100;
+        if(_engine.playerList[0].score > _engine.playerList[1].score){
+            score1 += _engine.playerList[0].score - _engine.playerList[1].score;
+        }
+        Browser.document.getElementById(UIElementId.PLAYER_ONE_SCOREBAR).style.width= score1 +  'px';
+        var score2 = 100;
+        if(_engine.playerList[1].score > _engine.playerList[0].score){
+            score2 += _engine.playerList[1].score - _engine.playerList[0].score;
+        }
+        Browser.document.getElementById(UIElementId.PLAYER_TWO_SCOREBAR).style.width= score2 +  'px';
         _display.updateData();
     }
 }
