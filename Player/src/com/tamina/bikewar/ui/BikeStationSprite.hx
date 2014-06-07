@@ -1,4 +1,5 @@
 package com.tamina.bikewar.ui;
+import com.tamina.bikewar.data.PlayerColor;
 import com.tamina.bikewar.core.Global;
 import createjs.easeljs.Shape;
 import com.tamina.bikewar.game.GameUtils;
@@ -20,7 +21,9 @@ class BikeStationSprite extends Container {
     private var _outBackgroundBitmap:Bitmap;
     private var _label:Text;
     private var _backgroundContainer:Container;
-    private var _ownerShape:Shape;
+    private var _ownerFlagContainer:Container;
+    private var _player0Bitmap:Bitmap;
+    private var _player1Bitmap:Bitmap;
 
     public function new(data:BikeStation, currentTime:Date) {
         super();
@@ -29,8 +32,13 @@ class BikeStationSprite extends Container {
         _defaultBackgroundBitmap = new Bitmap(Global.IMG_BASE_PATH + 'images/stationBackground_defaut.png');
         _outBackgroundBitmap = new Bitmap(Global.IMG_BASE_PATH + 'images/stationBackground_out.png');
 
+        _player0Bitmap = new Bitmap(Global.IMG_BASE_PATH + 'images/stationFlag_0.png');
+        _player1Bitmap = new Bitmap(Global.IMG_BASE_PATH + 'images/stationFlag_1.png');
+
         _backgroundContainer = new Container();
         this.addChild(_backgroundContainer);
+        _ownerFlagContainer = new Container();
+        this.addChild(_ownerFlagContainer);
 
         _label = new Text();
         _label.x = 18;
@@ -43,28 +51,25 @@ class BikeStationSprite extends Container {
 
         this.addChild(_label);
 
-        _ownerShape = new Shape();
-        this.addChild(_ownerShape);
-
         updateBackground();
     }
 
     public function updateData(currentTime:Date):Void {
         _label.text = Std.string(_data.bikeNum);
         _currentTime = currentTime;
-        updateOwnerShape();
+        updateOwnerFlag();
         updateBackground();
     }
 
-    private function updateOwnerShape():Void {
-        _ownerShape.graphics.clear();
+    private function updateOwnerFlag():Void {
+
         if (_data.owner != null) {
-            _ownerShape.graphics.beginFill(_data.owner.color);
-            _ownerShape.graphics.moveTo(25, 10);
-            _ownerShape.graphics.lineTo(32, 10);
-            _ownerShape.graphics.lineTo(32, 17);
-            _ownerShape.graphics.lineTo(25, 10);
-            _ownerShape.graphics.endFill();
+            _ownerFlagContainer.removeAllChildren();
+            var targetFlag:Bitmap = _player0Bitmap;
+            if (_data.owner.color == PlayerColor.BLUE) {
+                targetFlag = _player1Bitmap;
+            }
+            _ownerFlagContainer.addChild(targetFlag);
         }
     }
 

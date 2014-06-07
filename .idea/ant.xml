@@ -2,11 +2,11 @@
 <project version="4">
   <component name="AntConfiguration">
     <buildFile url="file://$PROJECT_DIR$/build.xml">
-      <customJdkName value="1.6" />
+      <customJdkName value="Java 1.7" />
       <properties>
-        <property name="env.DEPLOY_DIR" value="C:/wamp/www" />
-        <property name="env.BUILD_DIR" value="$PROJECT_DIR$/Player/src" />
-        <property name="env.DEPLOY_URL" value="http://localhost:8686/bikewar/" />
+        <property name="env.DEPLOY_URL" value="http://localhost:8080/bikewar" />
+        <property name="env.DEPLOY_DIR" value="$PROJECT_DIR$/../../www-dev/" />
+        <property name="env.BUILD_DIR" value="/media/shared/home/david/Public/BikeWar/BikeWar/Player/src" />
       </properties>
     </buildFile>
   </component>

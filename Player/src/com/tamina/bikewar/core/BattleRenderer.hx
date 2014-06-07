@@ -1,4 +1,5 @@
 package com.tamina.bikewar.core;
+import js.html.TableCellElement;
 import org.tamina.log.QuickLogger;
 import js.html.Element;
 import com.tamina.bikewar.ui.UIElementId;
@@ -49,6 +50,9 @@ class BattleRenderer {
     public function start():Void {
         if (!_engine.isComputing) {
             _engine.getBattleResult(_data, Game.GAME_SPEED);
+            Browser.document.getElementById(UIElementId.FIGHT_BUTTON).style.display='none';
+            Browser.document.getElementById(UIElementId.TIME).style.display='block';
+            Browser.document.getElementById(UIElementId.FIGHT_RUNNING_IMAGE).style.display='block';
         } else {
             trace("battle already started");
         }
@@ -74,11 +78,17 @@ class BattleRenderer {
         var score1 = 100;
         if(_engine.playerList[0].score > _engine.playerList[1].score){
             score1 += _engine.playerList[0].score - _engine.playerList[1].score;
+            if(score1 > 500){
+                score1 = 500;
+            }
         }
         Browser.document.getElementById(UIElementId.PLAYER_ONE_SCOREBAR).style.width= score1 +  'px';
         var score2 = 100;
         if(_engine.playerList[1].score > _engine.playerList[0].score){
             score2 += _engine.playerList[1].score - _engine.playerList[0].score;
+            if(score2 > 500){
+                score2 = 500;
+            }
         }
         Browser.document.getElementById(UIElementId.PLAYER_TWO_SCOREBAR).style.width= score2 +  'px';
         _display.updateData();

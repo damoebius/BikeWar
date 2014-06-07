@@ -1,4 +1,6 @@
 package com.tamina.bikewar.ui;
+import org.tamina.utils.DateUtils;
+import js.Browser;
 import com.tamina.bikewar.core.Global;
 import createjs.tweenjs.MotionGuidePlugin;
 import com.tamina.bikewar.game.GameUtils;
@@ -67,6 +69,7 @@ class MapUI extends Stage {
         _data = data;
         _debugMode = debugMode;
         _dateText.text = _data.currentTime.toString();
+        Browser.document.getElementById(UIElementId.TIME).innerHTML = DateUtils.hourToFrenchString( _data.currentTime);
         for (i in 0..._data.stations.length) {
             var stationSprite = new BikeStationSprite( _data.stations[i], _data.currentTime );
             stationSprite.x = _data.stations[i].position.x - BikeStationSprite.PADDING_LEFT;
@@ -98,7 +101,7 @@ class MapUI extends Stage {
     }
 
     public function updateData():Void {
-        _dateText.text = _data.currentTime.toString();
+        Browser.document.getElementById(UIElementId.TIME).innerHTML = DateUtils.hourToFrenchString( _data.currentTime);
         for (i in 0..._stationsContainer.getNumChildren()) {
             _stationsContainer.getElementAt(i).updateData(_data.currentTime);
         }
