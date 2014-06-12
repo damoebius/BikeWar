@@ -1,7 +1,7 @@
 package com.tamina.bikewar.game;
 import org.tamina.geom.Point;
 class Game {
-    public static var GAME_MAX_NUM_TURN:Int = 500;
+    public static var GAME_MAX_NUM_TURN:Int = 25;
     public static var GAME_SPEED:Int = 1000;
     public static var TRUCK_SPEED:Int = 60;
     public static var TRUCK_NUM_SLOT:Int = 10;

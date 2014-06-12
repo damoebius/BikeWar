@@ -45,12 +45,12 @@ class MapUI extends Stage {
         textBackgroundShape.graphics.beginFill('#FFFF00');
         textBackgroundShape.graphics.drawRect(0, 0, 285, 35);
         textBackgroundShape.graphics.endFill();
-        this.addChild(textBackgroundShape);
+        //this.addChild(textBackgroundShape);
         _dateText = new Text();
         _dateText.color = '#000000';
         _dateText.font = "30px Arial";
         _dateText.textAlign = 'left';
-        this.addChild(_dateText);
+        //this.addChild(_dateText);
 
         _roadsSprite = new RoadSprite(width, height);
        // this.addChild(_roadsSprite);
@@ -59,10 +59,8 @@ class MapUI extends Stage {
     }
 
     public function showResultScreen(winner:String, resultMessage:String):Void {
-        _resultScreen = new ResultScreen(winner, resultMessage);
+        _resultScreen = new ResultScreen(winner, resultMessage,_width, _height);
         this.addChild(_resultScreen);
-        _resultScreen.x = Math.floor(_width / 2 - _resultScreen.getWidth() / 2);
-        _resultScreen.y = Math.floor(_height / 2 - _resultScreen.getHeight() / 2);
     }
 
     public function init(data:MapData, debugMode:Bool = false):Void {
