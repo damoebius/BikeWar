@@ -1,4 +1,5 @@
 package com.tamina.bikewar.data.vo;
+import org.tamina.log.QuickLogger;
 import org.tamina.geom.Junction;
 import org.tamina.geom.Point;
 class BikeStationVO {
@@ -40,9 +41,22 @@ class BikeStationVO {
         result.bikeNum = Math.round(Math.random() * result.slotNum);
         result.id = Std.parseFloat(id);
         result.name = name;
-        for (i in 0...96) {
-            result.profile.push(Math.round(Math.random() * result.slotNum));
+        var pl = Mock.getProfilesByStationId(id);
+        for(i in 0...pl.length){
+            if(i >= 0){
+                for(j in 0...3){
+                    result.profile.push( Math.round (pl[i].num));
+                }
+            }
+            result.profile.push( Math.round (pl[i].num));
         }
+        if(result.profile.length != 96){
+            QuickLogger.error('profile trop petit : ' + id + ' // ' + result.profile.length);
+        }
+        /*for (i in 0...96) {
+            result.profile.push(Math.round(Math.random() * result.slotNum));
+        } */
+
         return result;
     }
 }
