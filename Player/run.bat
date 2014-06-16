@@ -1,0 +1,3 @@
+set HAXE_STD_PATH=C:\Users\d.mouton\Documents\BikeWar\Player\node_modules\haxe\bin/../std
+echo %HAXE_STD_PATH%
+C:\Users\d.mouton\Documents\BikeWar\Player\node_modules\haxe\bin/haxe.exe -cp src -main com.tamina.bikewar.PlayerUI -cp C:\Users\d.mouton\Documents\BikeWar\Player\node_modules\haxe\bin/../../mconsole-npm -cp C:\Users\d.mouton\Documents\BikeWar\Player\node_modules\haxe\bin/../../msignal -cp C:\Users\d.mouton\Documents\BikeWar\Player\node_modules\haxe\bin/../lib/createjs -cp C:\Users\d.mouton\Documents\BikeWar\Player\node_modules\haxe\bin/../../taminahx -js C:\Users\d.mouton\Documents\BikeWar/TestPlayer/build/js/release/Player.js

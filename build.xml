@@ -17,8 +17,9 @@
 	<target name="compile-player">
 		<mkdir dir="${output.js}"/>
 
-		<exec executable="haxe" dir="Player" failonerror="true">
-			<arg line="Player.hxml"/>
+		<exec executable="node" dir="Player" failonerror="true">
+			<arg line="node_modules\haxe\bin\haxe-cli.js"/>
+            <arg line="-cp src -main com.tamina.bikewar.PlayerUI -lib mconsole-npm -lib msignal -use createjs -lib taminahx"/>
 			<arg line="-js '${output.js}/Player.js'"/>
 		</exec>
 	</target>
@@ -26,7 +27,8 @@
     <target name="compile-ia">
         <mkdir dir="${output.js}"/>
 
-        <exec executable="haxe" dir="Player" failonerror="true">
+        <exec executable="node" failonerror="true" dir="Player">
+            <arg line="node_modules\haxe\bin\haxe-cli.js"/>
             <arg line="-cp src -js ${output.js}/MyIA.js -main MyIA -debug"/>
             <arg line="-lib taminahx"/>
         </exec>

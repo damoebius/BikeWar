@@ -1,4 +1,5 @@
 package com.tamina.bikewar.data;
+import org.tamina.log.QuickLogger;
 import org.tamina.utils.UID;
 import haxe.Unserializer;
 import org.tamina.geom.Junction;
@@ -35,6 +36,9 @@ class Mock {
         for (i in 0...stationsVO.length) {
             var station = stationsVO[i].toBikeStation(width, height);
             if (station.position.x > 0 && station.position.y > 0 && station.position.x < width && station.position.y < height) {
+                if(station.profile.length != 96){
+                     QuickLogger.error('la station suivante est presente mais sans profile ' + station.id);
+                }
                 result.stations.push(station);
             }
         }

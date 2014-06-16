@@ -48,7 +48,7 @@ class BikeStationSprite extends Container {
         _label.font = "08px Pixel01";
         _label.text = Std.string(_data.bikeNum);
 
-
+        trace(_data.id + ' --> ' + _data.profile[0]);
         this.addChild(_label);
 
         updateBackground();
