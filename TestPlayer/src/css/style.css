@@ -79,7 +79,7 @@ body {
 .playerName {
     width: 1353px;
     font-family: 'Silom', sans-serif;
-    font-size: 12px;
+    font-size: 24px;
     color: #fff64e;
     /*text-align: center;*/
     margin: 0px;
@@ -91,6 +91,7 @@ body {
     font-size: 20px;
     color: #FFFFFF;
     height: 24px;
+    padding-bottom: 6px;
 }
 
 .playerTwoScore {
@@ -100,10 +101,41 @@ body {
     color: #FFFFFF;
     height: 24px;
     margin-top: 3px;
+    padding-bottom: 6px;
 }
 
 .score {
     font-family: "Arial";
     font-size: 10px;
     color: #333333;
+}
+
+.container_12 {
+    width:100% !important;
+    height: 100% !important;
+    background-color: #000000 !important;
+    padding: 0px !important;
+}
+
+.grid_12 {
+    width:100% !important;
+    height: 100% !important;
+}
+
+table {
+    border:none !important;
+    padding: 0px !important;
+}
+td table {
+    width: auto !important;
+    min-width: 0 !important;
+    display:table !important;
+}
+tbody {
+    border:none !important;
+    padding: 0px !important;
+}
+td {
+    border:none !important;
+    padding: 0px !important;
 }

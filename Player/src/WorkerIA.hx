@@ -57,7 +57,7 @@ class WorkerIA
             try{
                 orders =  instance.getOrders( turnMessage.data );
             } catch (e:Dynamic) {
-                msg = Std.string(e);
+                msg = Std.string(e + ' ' + e.stack);
             }
 			this.postMessage( new TurnResult(orders, msg) );
 		} else {

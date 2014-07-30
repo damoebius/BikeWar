@@ -12,7 +12,6 @@ class GameUtils {
     public static function getTravelDuration(source:Truck, target:BikeStation):Int{
         var result:Int = 1000;
         result = Math.ceil( getDistanceBetween( source.position, target.position) / Game.TRUCK_SPEED);
-        trace(result);
         return result;
     }
 
@@ -22,7 +21,7 @@ class GameUtils {
     }
 
     public static function hasStationEnoughBike(station:BikeStation):Bool{
-        return (station.bikeNum > station.slotNum/4 && station.bikeNum < station.slotNum/4*3);
+        return (station.bikeNum >= station.slotNum/4 && station.bikeNum <= station.slotNum/4*3);
     }
 
     public static function getPath(fromStation:BikeStation,toStation:BikeStation, map:MapData):Path{
@@ -34,8 +33,6 @@ class GameUtils {
         var now = Date.now();
         var minutes = now.getMinutes();
         minutes = Math.floor(  minutes * 4 / 60 ) * 15;
-        trace(now.getMinutes());
-        trace(minutes);
         return Date.fromTime(  now.getTime() - (now.getMinutes() - minutes)*1000*60 - now.getSeconds()*1000);
     }
 

@@ -2,9 +2,6 @@ package com.tamina.bikewar.core;
 import com.tamina.bikewar.data.UnLoadingOrder;
 import com.tamina.bikewar.data.OrderType;
 import com.tamina.bikewar.data.LoadingOrder;
-import com.tamina.bikewar.data.MoveOrder;
-import org.tamina.log.QuickLogger;
-import org.tamina.geom.Point;
 import com.tamina.bikewar.data.BikeStation;
 import com.tamina.bikewar.data.Truck;
 import com.tamina.bikewar.data.Order;
@@ -179,21 +176,18 @@ class BaseGameEngine {
                     var target:BikeStation = getStationByID(element.targetStationId);
                     if (element.type == OrderType.MOVE) {
                         truck_moveSignal.dispatch(source, target);
-                        QuickLogger.info('move truck ' + source.id);
                     } else if (element.type == OrderType.LOAD) {
                         var lo:LoadingOrder = cast element;
                         source.bikeNum += lo.bikeNum;
                         target.bikeNum -= lo.bikeNum;
                         target.owner = source.owner;
-                        QuickLogger.info('load bike ' + source.id);
                     } else if (element.type == OrderType.UNLOAD) {
                         var lo:UnLoadingOrder = cast element;
                         source.bikeNum -= lo.bikeNum;
                         target.bikeNum += lo.bikeNum;
                         target.owner = source.owner;
-                        QuickLogger.info('unload bike ' + source.id);
                     } else {
-                        QuickLogger.error("order type inconnu");
+                        //QuickLogger.error("order type inconnu");
                     }
                 } else {
                     if (ordersOwner.playerId == playerList[0].player.id) {
@@ -231,6 +225,10 @@ class BaseGameEngine {
                 trace("Invalid Order : pas assez de vélo en station");
                 result = false;
             }
+            if(loadOrder.bikeNum < 0 || loadOrder.bikeNum % 1 != 0){
+                trace("Invalid Order : nombre de velo negatif ou flotant");
+                result = false;
+            }
 
         }
         else if (order.type == OrderType.UNLOAD) {
@@ -241,6 +239,10 @@ class BaseGameEngine {
             }
             if (unloadOrder.bikeNum > source.bikeNum) {
                 trace("Invalid Order : pas assez de vélo " + unloadOrder.bikeNum + "//" + target.bikeNum);
+                result = false;
+            }
+            if(unloadOrder.bikeNum < 0 || unloadOrder.bikeNum % 1 != 0){
+                trace("Invalid Order : nombre de velo negatif ou flotant");
                 result = false;
             }
 

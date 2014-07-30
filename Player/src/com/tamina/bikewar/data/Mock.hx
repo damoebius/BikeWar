@@ -36,9 +36,6 @@ class Mock {
         for (i in 0...stationsVO.length) {
             var station = stationsVO[i].toBikeStation(width, height);
             if (station.position.x > 0 && station.position.y > 0 && station.position.x < width && station.position.y < height) {
-                if(station.profile.length != 96){
-                     QuickLogger.error('la station suivante est presente mais sans profile ' + station.id);
-                }
                 result.stations.push(station);
             }
         }
@@ -1865,6 +1862,156 @@ class Mock {
         result.push({id:"136",num:8.1865671641791});
         result.push({id:"136",num:8.39303482587065});
         result.push({id:"136",num:8.51358024691358});
+
+        result.push({id:"25",num:9.19464720194647});
+        result.push({id:"25",num:9.6479217603912});
+        result.push({id:"25",num:9.78465346534654});
+        result.push({id:"25",num:10.0272952853598});
+        result.push({id:"25",num:9.64460784313725});
+        result.push({id:"25",num:9.07901234567901});
+        result.push({id:"25",num:8.58620689655172});
+        result.push({id:"25",num:8.20638820638821});
+        result.push({id:"25",num:7.86945812807882});
+        result.push({id:"25",num:8.05223880597015});
+        result.push({id:"25",num:8.49875311720698});
+        result.push({id:"25",num:8.01995012468828});
+        result.push({id:"25",num:7.1775});
+        result.push({id:"25",num:6.38461538461539});
+        result.push({id:"25",num:6.70223325062035});
+        result.push({id:"25",num:6.6977886977887});
+        result.push({id:"25",num:6.24817518248175});
+        result.push({id:"25",num:6.3838630806846});
+        result.push({id:"25",num:7.1747572815534});
+        result.push({id:"25",num:7.9294403892944});
+        result.push({id:"25",num:8.14914425427873});
+        result.push({id:"25",num:8.1865671641791});
+        result.push({id:"25",num:8.39303482587065});
+        result.push({id:"25",num:8.51358024691358});
+
+        result.push({id:"28",num:9.19464720194647});
+        result.push({id:"28",num:9.6479217603912});
+        result.push({id:"28",num:9.78465346534654});
+        result.push({id:"28",num:10.0272952853598});
+        result.push({id:"28",num:9.64460784313725});
+        result.push({id:"28",num:9.07901234567901});
+        result.push({id:"28",num:8.58620689655172});
+        result.push({id:"28",num:8.20638820638821});
+        result.push({id:"28",num:7.86945812807882});
+        result.push({id:"28",num:8.05223880597015});
+        result.push({id:"28",num:8.49875311720698});
+        result.push({id:"28",num:8.01995012468828});
+        result.push({id:"28",num:7.1775});
+        result.push({id:"28",num:6.38461538461539});
+        result.push({id:"28",num:6.70223325062035});
+        result.push({id:"28",num:6.6977886977887});
+        result.push({id:"28",num:6.24817518248175});
+        result.push({id:"28",num:6.3838630806846});
+        result.push({id:"28",num:7.1747572815534});
+        result.push({id:"28",num:7.9294403892944});
+        result.push({id:"28",num:8.14914425427873});
+        result.push({id:"28",num:8.1865671641791});
+        result.push({id:"28",num:8.39303482587065});
+        result.push({id:"28",num:8.51358024691358});
+
+        result.push({id:"63",num:9.19464720194647});
+        result.push({id:"63",num:9.6479217603912});
+        result.push({id:"63",num:9.78465346534654});
+        result.push({id:"63",num:10.0272952853598});
+        result.push({id:"63",num:9.64460784313725});
+        result.push({id:"63",num:9.07901234567901});
+        result.push({id:"63",num:8.58620689655172});
+        result.push({id:"63",num:8.20638820638821});
+        result.push({id:"63",num:7.86945812807882});
+        result.push({id:"63",num:8.05223880597015});
+        result.push({id:"63",num:8.49875311720698});
+        result.push({id:"63",num:8.01995012468828});
+        result.push({id:"63",num:7.1775});
+        result.push({id:"63",num:6.38461538461539});
+        result.push({id:"63",num:6.70223325062035});
+        result.push({id:"63",num:6.6977886977887});
+        result.push({id:"63",num:6.24817518248175});
+        result.push({id:"63",num:6.3838630806846});
+        result.push({id:"63",num:7.1747572815534});
+        result.push({id:"63",num:7.9294403892944});
+        result.push({id:"63",num:8.14914425427873});
+        result.push({id:"63",num:8.1865671641791});
+        result.push({id:"63",num:8.39303482587065});
+        result.push({id:"63",num:8.51358024691358});
+
+        result.push({id:"72",num:9.19464720194647});
+        result.push({id:"72",num:9.6479217603912});
+        result.push({id:"72",num:9.78465346534654});
+        result.push({id:"72",num:10.0272952853598});
+        result.push({id:"72",num:9.64460784313725});
+        result.push({id:"72",num:9.07901234567901});
+        result.push({id:"72",num:8.58620689655172});
+        result.push({id:"72",num:8.20638820638821});
+        result.push({id:"72",num:7.86945812807882});
+        result.push({id:"72",num:8.05223880597015});
+        result.push({id:"72",num:8.49875311720698});
+        result.push({id:"72",num:8.01995012468828});
+        result.push({id:"72",num:7.1775});
+        result.push({id:"72",num:6.38461538461539});
+        result.push({id:"72",num:6.70223325062035});
+        result.push({id:"72",num:6.6977886977887});
+        result.push({id:"72",num:6.24817518248175});
+        result.push({id:"72",num:6.3838630806846});
+        result.push({id:"72",num:7.1747572815534});
+        result.push({id:"72",num:7.9294403892944});
+        result.push({id:"72",num:8.14914425427873});
+        result.push({id:"72",num:8.1865671641791});
+        result.push({id:"72",num:8.39303482587065});
+        result.push({id:"72",num:8.51358024691358});
+
+        result.push({id:"106",num:9.19464720194647});
+        result.push({id:"106",num:9.6479217603912});
+        result.push({id:"106",num:9.78465346534654});
+        result.push({id:"106",num:10.0272952853598});
+        result.push({id:"106",num:9.64460784313725});
+        result.push({id:"106",num:9.07901234567901});
+        result.push({id:"106",num:8.58620689655172});
+        result.push({id:"106",num:8.20638820638821});
+        result.push({id:"106",num:7.86945812807882});
+        result.push({id:"106",num:8.05223880597015});
+        result.push({id:"106",num:8.49875311720698});
+        result.push({id:"106",num:8.01995012468828});
+        result.push({id:"106",num:7.1775});
+        result.push({id:"106",num:6.38461538461539});
+        result.push({id:"106",num:6.70223325062035});
+        result.push({id:"106",num:6.6977886977887});
+        result.push({id:"106",num:6.24817518248175});
+        result.push({id:"106",num:6.3838630806846});
+        result.push({id:"106",num:7.1747572815534});
+        result.push({id:"106",num:7.9294403892944});
+        result.push({id:"106",num:8.14914425427873});
+        result.push({id:"106",num:8.1865671641791});
+        result.push({id:"106",num:8.39303482587065});
+        result.push({id:"106",num:8.51358024691358});
+
+        result.push({id:"133",num:9.19464720194647});
+        result.push({id:"133",num:9.6479217603912});
+        result.push({id:"133",num:9.78465346534654});
+        result.push({id:"133",num:10.0272952853598});
+        result.push({id:"133",num:9.64460784313725});
+        result.push({id:"133",num:9.07901234567901});
+        result.push({id:"133",num:8.58620689655172});
+        result.push({id:"133",num:8.20638820638821});
+        result.push({id:"133",num:7.86945812807882});
+        result.push({id:"133",num:8.05223880597015});
+        result.push({id:"133",num:8.49875311720698});
+        result.push({id:"133",num:8.01995012468828});
+        result.push({id:"133",num:7.1775});
+        result.push({id:"133",num:6.38461538461539});
+        result.push({id:"133",num:6.70223325062035});
+        result.push({id:"133",num:6.6977886977887});
+        result.push({id:"133",num:6.24817518248175});
+        result.push({id:"133",num:6.3838630806846});
+        result.push({id:"133",num:7.1747572815534});
+        result.push({id:"133",num:7.9294403892944});
+        result.push({id:"133",num:8.14914425427873});
+        result.push({id:"133",num:8.1865671641791});
+        result.push({id:"133",num:8.39303482587065});
+        result.push({id:"133",num:8.51358024691358});
 
         return result;
     }

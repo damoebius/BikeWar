@@ -1,4 +1,5 @@
 package com.tamina.bikewar.ui;
+import org.tamina.log.QuickLogger;
 import com.tamina.bikewar.core.Global;
 import createjs.easeljs.Bitmap;
 import createjs.easeljs.Container;
@@ -50,6 +51,7 @@ class ResultScreen extends Container
 		_messageText.lineHeight = 20.0;
 		_messageText.x = _width / 2 ;
 		_messageText.y = _winnerText.y + 14;
+        QuickLogger.warn(message);
 		//this.addChild(_messageText);
 	}
 	
