@@ -6,6 +6,7 @@ import createjs.easeljs.Event;
 import createjs.tweenjs.Tween;
 import createjs.easeljs.DisplayObject;
 import com.tamina.bikewar.data.Path;
+
 class AnimatePath {
 
     public var moveSignal:Signal0;

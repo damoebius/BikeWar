@@ -19,7 +19,6 @@ class PathFinder {
     }
 
     public function getPath(fromStation:BikeStation, toStation:BikeStation, map:MapData):Path {
-        trace(fromStation.id + ' to ' + toStation.id);
         _map = map;
         _source = getJunctionByStation(fromStation);
         _target = getJunctionByStation(toStation);
@@ -29,7 +28,6 @@ class PathFinder {
         _paths.push(p);
         var startDate = Date.now();
         find();
-        trace('end finding : ' + (Date.now().getTime() - startDate.getTime() ));
         return _result;
     }
 
@@ -37,7 +35,7 @@ class PathFinder {
         var result:Junction = null;
         for (i in 0..._map.roads.length) {
             var j = _map.roads[i];
-            if (j.x == station.position.x && j.y == station.position.y) {
+            if (j.id == Std.string(station.id) ) {
                 result = j;
                 break;
             }
@@ -63,9 +61,6 @@ class PathFinder {
     private function checkPath(target:Path):Bool {
         var result:Bool = false;
         var currentJunction = target.getLastItem();
-        if(currentJunction.links == null){
-            trace('Null Pointer Exception : links on Junctions ' + currentJunction.id);
-        }
         for (i in 0...currentJunction.links.length) {
             var nextJunction = currentJunction.links[i];
             if (nextJunction.id == _target.id) {

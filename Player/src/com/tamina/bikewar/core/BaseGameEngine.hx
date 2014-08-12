@@ -1,4 +1,7 @@
 package com.tamina.bikewar.core;
+import com.tamina.bikewar.data.MoveOrder;
+import com.tamina.bikewar.game.GameUtils;
+import com.tamina.bikewar.game.Game;
 import com.tamina.bikewar.data.UnLoadingOrder;
 import com.tamina.bikewar.data.OrderType;
 import com.tamina.bikewar.data.LoadingOrder;
@@ -98,6 +101,7 @@ class BaseGameEngine {
     private function computeCurrentTurn():Void {
         parseOrder();
         updateBikeStations();
+        updateTrucks();
         updatePlayerScore();
         _data.currentTime = Date.fromTime(_data.currentTime.getTime() + Game.TURN_TIME);
         turn_completeSignal.dispatch();
@@ -111,6 +115,19 @@ class BaseGameEngine {
             }
         }
 
+    }
+
+    private function updateTrucks():Void{
+         for(i in 0..._data.trucks.length){
+            var t = _data.trucks[i];
+             if(t.travelDuration > 0){
+                t.currentStation = null;
+                t.travelDuration--;
+             } else if(t.destination != null) {
+                 t.currentStation = t.destination;
+                 t.destination = null;
+             }
+         }
     }
 
     private function updatePlayerScore():Void {
@@ -160,6 +177,7 @@ class BaseGameEngine {
     private function executeIAOrders(ordersOwner:IIA):Void {
         var orders:Array<Order> = ordersOwner.turnOrders;
         if (orders.length > 2) {
+            trace('orders list trop grande');
             if (ordersOwner.playerId == playerList[0].player.id) {
                 playerList[0].score = -100;
                 endBattle(new BattleResult( playerList, _currentTurn, playerList[1].player, "Son adversaire a dépassé le nombre d'ordre authorisé" ));
@@ -175,19 +193,23 @@ class BaseGameEngine {
                     var source:Truck = getTruckByID(element.truckId);
                     var target:BikeStation = getStationByID(element.targetStationId);
                     if (element.type == OrderType.MOVE) {
+                        source.destination = target;
+                        source.travelDuration = GameUtils.getTravelDuration(source.currentStation,source.destination,_data);
                         truck_moveSignal.dispatch(source, target);
                     } else if (element.type == OrderType.LOAD) {
                         var lo:LoadingOrder = cast element;
                         source.bikeNum += lo.bikeNum;
                         target.bikeNum -= lo.bikeNum;
                         target.owner = source.owner;
+                        source.destination = null;
                     } else if (element.type == OrderType.UNLOAD) {
                         var lo:UnLoadingOrder = cast element;
                         source.bikeNum -= lo.bikeNum;
                         target.bikeNum += lo.bikeNum;
                         target.owner = source.owner;
+                        source.destination = null;
                     } else {
-                        //QuickLogger.error("order type inconnu");
+                        trace("order type inconnu");
                     }
                 } else {
                     if (ordersOwner.playerId == playerList[0].player.id) {
@@ -229,6 +251,14 @@ class BaseGameEngine {
                 trace("Invalid Order : nombre de velo negatif ou flotant");
                 result = false;
             }
+            if(source.currentStation == null){
+                trace("Invalid Order : impossible de charger des vélos en cours de route !!!");
+                result = false;
+            }
+            else if(loadOrder.targetStationId != source.currentStation.id){
+                trace("Invalid Order : la station de destination ne corresond pas à l'actuelle");
+                result = false;
+            }
 
         }
         else if (order.type == OrderType.UNLOAD) {
@@ -243,6 +273,21 @@ class BaseGameEngine {
             }
             if(unloadOrder.bikeNum < 0 || unloadOrder.bikeNum % 1 != 0){
                 trace("Invalid Order : nombre de velo negatif ou flotant");
+                result = false;
+            }
+            if(source.currentStation == null){
+                trace("Invalid Order : impossible de vider des vélos en cours de route !!!");
+                result = false;
+            }
+            else if(unloadOrder.targetStationId != source.currentStation.id){
+                trace("Invalid Order : la station de destination ne corresond pas à l'actuelle");
+                result = false;
+            }
+
+        }   else if (order.type == OrderType.MOVE) {
+            var moveOrder:MoveOrder = cast order;
+            if (source.currentStation == null) {
+                trace("Invalid Order : interdiction de déplacer de changer la direction d'un camion en cours de route");
                 result = false;
             }
 

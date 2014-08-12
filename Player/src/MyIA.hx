@@ -35,6 +35,10 @@ class MyIA extends WorkerIA {
     override public function getOrders( context:MapData ):Array<Order> {
         var result:Array<Order> = new Array<Order>();
         _currentContext = context;
+        var fs = getFewBikeStations();
+        fs = fs.concat(getGoodBikeStations());
+        var ms = getMuchBikeStations();
+        ms = ms.concat(getGoodBikeStations());
         for ( i in 0...context.trucks.length ) {
             var truck = context.trucks[i];
             if ( truck.owner.id == this.id && truck.currentStation != null ) {
@@ -46,7 +50,11 @@ class MyIA extends WorkerIA {
                     if ( GameUtils.hasStationEnoughBike(truck.currentStation) ) {
                         result.push(new LoadingOrder(truck.id, truck.currentStation.id, 0));
                     } else if ( truck.currentStation.bikeNum < truck.currentStation.slotNum / 4 && truck.bikeNum > 0 ) {
-                        result.push(new UnLoadingOrder(truck.id, truck.currentStation.id, truck.bikeNum));
+                        var num = truck.bikeNum;
+                        if ( num + truck.currentStation.bikeNum > truck.currentStation.slotNum / 4 * 3 ) {
+                            num = Math.floor(truck.currentStation.slotNum / 4 * 3 - truck.currentStation.bikeNum);
+                        }
+                        result.push(new UnLoadingOrder(truck.id, truck.currentStation.id, num));
                     } else if ( truck.currentStation.bikeNum > truck.currentStation.slotNum / 4 * 3 ) {
                         debugMessage = "trop de velo";
                         if ( truck.bikeNum <= 5 ) {
@@ -56,8 +64,15 @@ class MyIA extends WorkerIA {
                         }
                     }
                 } else {
-                        _movingTruckId.push(truck.id);
+                    _movingTruckId.push(truck.id);
+                    if ( truck.bikeNum == 0 && ms.length > 0 ) {
+                        result.push(new MoveOrder( truck.id, getNearestStations(truck, ms).id ));
+                    } else if ( truck.bikeNum == Game.TRUCK_NUM_SLOT && fs.length > 0 ) {
+                        result.push(new MoveOrder( truck.id, getNearestStations(truck, fs).id ));
+                    }
+                    else {
                         result.push(new MoveOrder( truck.id, getNearestStations(truck, getOthersBikeStations()).id ));
+                    }
 
                 }
 
@@ -72,9 +87,18 @@ class MyIA extends WorkerIA {
 
     private function getNearestStations( origin:Truck, stations:Array<BikeStation> ):BikeStation {
         var result = stations[0];
+        var t = getMyTrucks();
+        var currentTravelDuration = GameUtils.getTravelDuration(origin.currentStation, result, _currentContext);
         for ( i in 1...stations.length ) {
-            if ( (origin.currentStation == null || stations[i].id != origin.currentStation.id) && GameUtils.getTravelDuration(origin, stations[i]) < GameUtils.getTravelDuration(origin, result) ) {
-                result = stations[i];
+            if ( (t[0].destination == null || t[0].destination.id != stations[i].id)
+            && (t[1].destination == null || t[1].destination.id != stations[i].id)
+            && (origin.currentStation == null || stations[i].id != origin.currentStation.id)
+            ) {
+                var newDuration = GameUtils.getTravelDuration(origin.currentStation, stations[i], _currentContext);
+                if ( newDuration < currentTravelDuration ) {
+                    result = stations[i];
+                    currentTravelDuration = newDuration;
+                }
             }
 
         }
@@ -106,6 +130,16 @@ class MyIA extends WorkerIA {
         for ( i in 0..._currentContext.stations.length ) {
             if ( !GameUtils.hasStationEnoughBike(_currentContext.stations[i]) && _currentContext.stations[i].bikeNum < 9 ) {
                 result.push(_currentContext.stations[i]);
+            }
+        }
+        return result;
+    }
+
+    private function getMyTrucks( ):Array<Truck> {
+        var result = new Array<Truck>();
+        for ( i in 0..._currentContext.trucks.length ) {
+            if ( _currentContext.trucks[i].owner.id == this.id ) {
+                result.push(_currentContext.trucks[i]);
             }
         }
         return result;

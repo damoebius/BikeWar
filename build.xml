@@ -43,10 +43,12 @@
 
         <exec executable="node" dir="Player" failonerror="true">
             <arg line="node_modules/haxe/bin/haxe-cli.js"/>
-            <arg line="-cp src -js ${output.js}/Server.js -main com.tamina.bikewar.Server"/>
+            <arg line="-cp src -js ${output.js}/ServerProcess.js -main com.tamina.bikewar.ServerProcess"/>
             <arg line="-use nodejs/lib/src"/>
             <arg line="-lib msignal"/>
             <arg line="-lib taminahx"/>
+            <arg line="-lib mconsole-npm"/>
+            <arg line="-lib createjs"/>
         </exec>
     </target>
 
@@ -77,7 +79,7 @@
 	</target>
 
 
-	<target name="compile-all" depends="compile-player, compile-ia"/>
+	<target name="compile-all" depends="compile-player, compile-ia, compile-server"/>
 
 	<target name="compile-all-debug" depends="compile-player-debug"/>
 

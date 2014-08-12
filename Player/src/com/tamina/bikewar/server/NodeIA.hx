@@ -1,7 +1,6 @@
 package com.tamina.bikewar.server;
 import com.tamina.bikewar.data.TurnMessage;
 import com.tamina.bikewar.game.Game;
-import haxe.Json;
 import com.tamina.bikewar.data.MapData;
 import nodejs.Console;
 import js.Error;
@@ -31,8 +30,9 @@ class NodeIA implements IIA {
         try {
             _worker = NodeJS.require(script);
             _worker.postMessage = worker_messageHandler;
-        } catch (e:Error) {
-            Console.warn('BAD ROBOT');
+        } catch (exp:Error) {
+            trace('BAD ROBOT : ' + exp.message);
+            trace(exp.stack);
         }
         _startTime = 0;
     }
@@ -51,10 +51,11 @@ class NodeIA implements IIA {
 
     public function send(data:MapData):Void {
         _startTime = Date.now().getTime();
-        var context:MapData = cast Json.parse(Json.stringify(data));
+        //var context:MapData = ObjectUtils.copy(data);
         try {
-            _worker.onmessage({ data:new TurnMessage(playerId, context)});
+            _worker.onmessage({ data:new TurnMessage(playerId, data)});
         } catch (e:Error) {
+            trace('turn error');
             turnResult_errorSignal.dispatch(playerId);
         }
     }

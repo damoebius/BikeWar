@@ -1,9 +1,7 @@
 package com.tamina.bikewar.ui;
 import org.tamina.utils.DateUtils;
 import js.Browser;
-import com.tamina.bikewar.core.Global;
 import createjs.tweenjs.MotionGuidePlugin;
-import com.tamina.bikewar.game.GameUtils;
 import org.tamina.geom.Junction;
 import org.tamina.geom.Junction;
 import com.tamina.bikewar.data.BikeStation;
@@ -15,7 +13,6 @@ import com.tamina.bikewar.data.MapData;
 import org.tamina.view.Group;
 import org.tamina.events.CreateJSEvent;
 import createjs.easeljs.Ticker;
-import createjs.easeljs.Bitmap;
 import createjs.easeljs.Stage;
 import js.HTMLCanvasElement;
 
@@ -53,7 +50,7 @@ class MapUI extends Stage {
         //this.addChild(_dateText);
 
         _roadsSprite = new RoadSprite(width, height);
-       // this.addChild(_roadsSprite);
+         //this.addChild(_roadsSprite);
 
         Ticker.addEventListener(CreateJSEvent.TICKER_TICK, tickerHandler);
     }
@@ -110,7 +107,13 @@ class MapUI extends Stage {
 
     public function moveTruck(truck:Truck, destination:BikeStation):Void {
         var target:TruckSprite = getSpriteByTruck(truck);
-        target.moveTo(destination,_data);
+        var p = target.moveTo(destination,_data);
+        /*var troad = new Shape();
+        troad.graphics.beginStroke('#ff0000');
+        _roadsSprite.addChild(troad);
+        for (i in 0...p.length){
+           troad.graphics.lineTo(p.getItemAt(i).x, p.getItemAt(i).y);
+        }   */
     }
 
     private function getSpriteByTruck(data:Truck):TruckSprite {

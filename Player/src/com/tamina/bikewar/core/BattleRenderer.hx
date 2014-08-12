@@ -1,12 +1,10 @@
 package com.tamina.bikewar.core;
-import js.html.TableCellElement;
 import org.tamina.log.QuickLogger;
 import js.html.Element;
 import com.tamina.bikewar.ui.UIElementId;
 import js.Browser;
 import com.tamina.bikewar.data.BattleResult;
 import com.tamina.bikewar.data.BikeStation;
-import org.tamina.geom.Point;
 import com.tamina.bikewar.data.Truck;
 import com.tamina.bikewar.game.Game;
 import com.tamina.bikewar.data.MapData;
@@ -41,6 +39,7 @@ class BattleRenderer {
         Browser.document.getElementById(UIElementId.PLAYER_TWO_NAME).innerHTML = _data.players[1].name;
         var fightButton:Element = Browser.document.getElementById(UIElementId.FIGHT_BUTTON);
         fightButton.addEventListener('click', fightHandler);
+
     }
 
     public function getData():MapData {

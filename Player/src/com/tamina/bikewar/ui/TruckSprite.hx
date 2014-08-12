@@ -5,12 +5,9 @@ import com.tamina.bikewar.tween.AnimatePath;
 import com.tamina.bikewar.data.MapData;
 import com.tamina.bikewar.data.Path;
 import com.tamina.bikewar.data.PlayerColor;
-import com.tamina.bikewar.game.Game;
 import com.tamina.bikewar.game.GameUtils;
 import com.tamina.bikewar.data.BikeStation;
-import createjs.easeljs.Event;
 import org.tamina.log.QuickLogger;
-import createjs.tweenjs.Tween;
 import org.tamina.geom.Point;
 import createjs.easeljs.Bitmap;
 import createjs.easeljs.Text;
@@ -24,7 +21,6 @@ class TruckSprite extends Container {
     private var _label:Text;
     private var _backgroundContainer:Container;
     private var _backgroundBitmap:Bitmap;
-    private var _targetStation:BikeStation;
     private var _motion:AnimatePath;
     private var _gaugeShape:Shape;
 
@@ -73,11 +69,10 @@ class TruckSprite extends Container {
         _gaugeShape.graphics.endFill();
     }
 
-    public function moveTo(target:BikeStation, map:MapData):Void {
-        _targetStation = target;
-        var path:Path = GameUtils.getPath(data.currentStation,_targetStation,map);
-        data.currentStation = null;
+    public function moveTo(target:BikeStation, map:MapData):Path {
+        var path:Path = GameUtils.getPath(data.currentStation,data.destination,map);
         _motion.animate(path);
+        return path;
     }
 
     private function moveChangeHandler():Void {
@@ -87,6 +82,5 @@ class TruckSprite extends Container {
 
     private function moveEndedHandler():Void {
         QuickLogger.info('move ended');
-        data.currentStation = _targetStation;
     }
 }

@@ -3,7 +3,6 @@ import org.tamina.log.QuickLogger;
 import haxe.Json;
 import org.tamina.events.XMLHttpRequestEvent;
 import msignal.Signal;
-import org.tamina.html.Global;
 import org.tamina.net.URL;
 import js.html.XMLHttpRequestProgressEvent;
 import js.html.XMLHttpRequest;

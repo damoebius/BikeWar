@@ -3,15 +3,17 @@ import com.tamina.bikewar.data.Path;
 import com.tamina.bikewar.core.PathFinder;
 import com.tamina.bikewar.data.MapData;
 import org.tamina.geom.Junction;
-import com.tamina.bikewar.data.Truck;
 import org.tamina.geom.Point;
 import com.tamina.bikewar.data.BikeStation;
 import com.tamina.bikewar.data.Trend;
 class GameUtils {
 
-    public static function getTravelDuration(source:Truck, target:BikeStation):Int{
-        var result:Int = 1000;
-        result = Math.ceil( getDistanceBetween( source.position, target.position) / Game.TRUCK_SPEED);
+    public static function getTravelDuration(source:BikeStation, target:BikeStation,map:MapData):Int{
+        var result:Int = 0;
+        var p = GameUtils.getPath(source,target,map);
+        for(i in 0...p.length -1){
+            result += Math.ceil( GameUtils.getDistanceBetween( p.getItemAt(i), p.getItemAt(i+1)) / Game.TRUCK_SPEED);
+        }
         return result;
     }
 

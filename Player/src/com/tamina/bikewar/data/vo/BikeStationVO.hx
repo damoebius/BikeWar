@@ -1,6 +1,4 @@
 package com.tamina.bikewar.data.vo;
-import com.tamina.bikewar.game.GameUtils;
-import org.tamina.log.QuickLogger;
 import org.tamina.geom.Junction;
 import org.tamina.geom.Point;
 class BikeStationVO {

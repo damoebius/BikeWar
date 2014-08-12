@@ -1,14 +1,11 @@
 package com.tamina.bikewar.ui;
 import com.tamina.bikewar.data.PlayerColor;
 import com.tamina.bikewar.core.Global;
-import createjs.easeljs.Shape;
 import com.tamina.bikewar.game.GameUtils;
-import com.tamina.bikewar.data.Trend;
 import createjs.easeljs.Text;
 import createjs.easeljs.Bitmap;
 import createjs.easeljs.Container;
 import com.tamina.bikewar.data.BikeStation;
-import createjs.easeljs.Sprite;
 class BikeStationSprite extends Container {
 
     public static var PADDING_LEFT:Int=17;
