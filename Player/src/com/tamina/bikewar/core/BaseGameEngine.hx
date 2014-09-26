@@ -344,8 +344,8 @@ class BaseGameEngine {
             var trend = GameUtils.getBikeStationTrend(station, _data.currentTime);
             var trendNum:Int = 0;
             switch(trend){
-                case Trend.INCREASE : Math.round(Math.random() * 3);
-                case Trend.DECREASE : -Math.round(Math.random() * 3);
+                case Trend.INCREASE : trendNum = Math.round(Math.random() * 3);
+                case Trend.DECREASE : trendNum = -Math.round(Math.random() * 3);
                 case Trend.STABLE : trendNum = Math.round(Math.random() * 2) - 1;
             }
             station.bikeNum += trendNum;
